@@ -1,0 +1,192 @@
+{
+  "customer": 
+  [
+    {
+      "id": "1",
+      "code": "T001",
+      "title": "Complete report",
+      "status": "done",
+      "label": "Report",
+      "priority": "high"
+    },
+    {
+      "id": "2",
+      "code": "T002",
+      "title": "Review presentation",
+      "status": "in-progress",
+      "label": "Presentation",
+      "priority": "medium"
+    },
+    {
+      "id": "3",
+      "code": "T003",
+      "title": "Prepare meeting agenda",
+      "status": "todo",
+      "label": "Meeting",
+      "priority": "low"
+    },
+    {
+      "id": "4",
+      "code": "T004",
+      "title": "Research new technologies",
+      "status": "in-progress",
+      "label": "Research",
+      "priority": "medium"
+    },
+    {
+      "id": "5",
+      "code": "T005",
+      "title": "Write documentation",
+      "status": "todo",
+      "label": "Documentation",
+      "priority": "low"
+    },
+    {
+      "id": "6",
+      "code": "T006",
+      "title": "Fix bugs in application",
+      "status": "in-progress",
+      "label": "Bugs",
+      "priority": "high"
+    },
+    {
+      "id": "7",
+      "code": "T007",
+      "title": "Organize team meeting",
+      "status": "done",
+      "label": "Meeting",
+      "priority": "medium"
+    },
+    {
+      "id": "8",
+      "code": "T008",
+      "title": "Create user interface mockups",
+      "status": "todo",
+      "label": "Design",
+      "priority": "high"
+    }
+  ],
+  "products": [
+    {
+      "id": "f1",
+      "name": "Rose Bouquet",
+      "description": "A beautiful bouquet of fresh red roses.",
+      "quantity": 20,
+      "version": 1,
+      "code": "FLW-001"
+    },
+    {
+      "id": "f2",
+      "name": "Tulip Arrangement",
+      "description": "A colorful arrangement of tulips in a vase.",
+      "quantity": 15,
+      "version": 1,
+      "code": "FLW-002"
+    },
+    {
+      "id": "f3",
+      "name": "Daisy Bouquet",
+      "description": "A cheerful bouquet of daisies.",
+      "quantity": 18,
+      "version": 1,
+      "code": "FLW-003"
+    },
+    {
+      "id": "f4",
+      "name": "Lily Bouquet",
+      "description": "An elegant bouquet of lilies.",
+      "quantity": 12,
+      "version": 1,
+      "code": "FLW-004"
+    },
+    {
+      "id": "f5",
+      "name": "Sunflower Bouquet",
+      "description": "A vibrant bouquet of sunflowers.",
+      "quantity": 25,
+      "version": 1,
+      "code": "FLW-005"
+    },
+    {
+      "id": "f6",
+      "name": "Orchid Plant",
+      "description": "A potted orchid plant.",
+      "quantity": 10,
+      "version": 1,
+      "code": "FLW-006"
+    },
+    {
+      "id": "f7",
+      "name": "Carnation Bouquet",
+      "description": "A classic bouquet of carnations.",
+      "quantity": 22,
+      "version": 1,
+      "code": "FLW-007"
+    },
+    {
+      "id": "f8",
+      "name": "Hydrangea Arrangement",
+      "description": "A lovely arrangement of hydrangeas.",
+      "quantity": 14,
+      "version": 1,
+      "code": "FLW-008"
+    },
+    {
+      "id": "f9",
+      "name": "Peony Bouquet",
+      "description": "A stunning bouquet of peonies.",
+      "quantity": 17,
+      "version": 1,
+      "code": "FLW-009"
+    },
+    {
+      "id": "f10",
+      "name": "Cactus Plant",
+      "description": "A small potted cactus.",
+      "quantity": 30,
+      "version": 1,
+      "code": "FLW-010"
+    },
+    {
+      "id": "f11",
+      "name": "Daffodil Bouquet",
+      "description": "A bouquet of bright daffodils.",
+      "quantity": 16,
+      "version": 1,
+      "code": "FLW-011"
+    },
+    {
+      "id": "f12",
+      "name": "Chrysanthemum Arrangement",
+      "description": "An arrangement of colorful chrysanthemums.",
+      "quantity": 19,
+      "version": 1,
+      "code": "FLW-012"
+    },
+    {
+      "id": "f13",
+      "name": "Gerbera Daisy Bouquet",
+      "description": "A vibrant bouquet of gerbera daisies.",
+      "quantity": 21,
+      "version": 1,
+      "code": "FLW-013"
+    },
+    {
+      "id": "f14",
+      "name": "Bird of Paradise Bouquet",
+      "description": "A tropical bouquet of bird of paradise flowers.",
+      "quantity": 11,
+      "version": 1,
+      "code": "FLW-014"
+    },
+    {
+      "id": "f15",
+      "name": "Anemone Bouquet",
+      "description": "A delicate bouquet of anemone flowers.",
+      "quantity": 13,
+      "version": 1,
+      "code": "FLW-015"
+    }
+  ]
+  
+}
