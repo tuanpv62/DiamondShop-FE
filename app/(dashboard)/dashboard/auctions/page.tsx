@@ -4,13 +4,13 @@ import React from "react";
 import { SearchParams } from "@/types/table";
 import { AuctionTable } from "./_components/auction-table";
 
-import { getTableAuctions } from "@/lib/actions/auction";
+import { getTableAuctionsV2 } from "@/lib/v2/actions-v2/auction-v2";
 export interface IndexPageProps {
   searchParams: SearchParams;
 }
 
 const AuctionDashBoardPage = ({ searchParams }: IndexPageProps) => {
-  const auctions = getTableAuctions(searchParams);
+  const auctions = getTableAuctionsV2(searchParams);
 
   return (
     <>

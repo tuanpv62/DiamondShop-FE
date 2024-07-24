@@ -51,7 +51,7 @@ export default function DestinationCarousel({ data }: LiveAuctionsProps) {
         {data?.map((item: IAuction, index: number) => (
           <SwiperSlide key={`destinaion-${index}`}>
             <DestinationCard
-              id={item.id}
+              id={item.auctionId}
               productName={item.productName}
               title={item.title}
               productCode={item.productCode}

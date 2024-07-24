@@ -1,4 +1,4 @@
-import { IAuction, IOrder } from "@/types/dashboard";
+import { IAuction, IAuctionV2, IOrder } from "@/types/dashboard";
 import { create } from "zustand";
 
 export type ModalType =
@@ -9,10 +9,12 @@ export type ModalType =
   | "viewInfoOrder"
   | "confirmAuction"
   | "rejectAuction"
-  | "feedBack";
+  | "feedBack"
+  | "estimateProduct"
+  ;
 
 export interface ModalData {
-  auction?: IAuction;
+  auction?: IAuctionV2;
   order?: IOrder
 }
 

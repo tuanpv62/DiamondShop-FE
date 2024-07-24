@@ -1,6 +1,7 @@
 "use client";
 
 import { ConfirmOrderModal } from "@/components/modal/confirm-order-modal";
+import { EstimateProductModal } from "@/components/modal/estimate-product";
 import { FeedBackModal } from "@/components/modal/feedback-modal";
 import { OrderSheet } from "@/components/modal/order-sheet-modal";
 import { RegiterAuctionModal } from "@/components/modal/register-auction-modal";
@@ -26,5 +27,6 @@ export const ModalProvider = () => {
     <ViewOrderModal/>
     <ViewConfirmModal/>
     <FeedBackModal/>
+    <EstimateProductModal/>
   </>;
 };

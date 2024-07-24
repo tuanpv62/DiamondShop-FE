@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 function SidebarV2() {
   const { data: session } = useSession();
 
-  const isAdmin = session?.user.role === "ADMIN";
+const isAdmin = session?.user.roleName?.toUpperCase() === "ADMIN";
   return (
     <aside className="relative hidden w-[96px] bg-white dark:bg-black sm:block">
       <div className="sidebar-wrapper-collapse relative top-0 z-30 w-full">
@@ -79,31 +79,7 @@ function SidebarV2() {
                     </li>
                   )}
 
-                  <li className="item px-[43px] py-[11px]">
-                    <Link href="/dashboard/products">
-                      <span className="item-ico">
-                        <Icons.productSidebarIcon />
-                      </span>
-                    </Link>
-                    <ul className="sub-menu min-w-[200px] rounded-lg border-l border-success-100 bg-white px-5 py-2 shadow-lg">
-                      <li>
-                        <Link
-                          href="/dashboard/products"
-                          className="text-md inline-block py-1.5 font-medium text-bgray-600 hover:text-bgray-800"
-                        >
-                          View products
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/dashboard/products/create-product"
-                          className="text-md inline-block py-1.5 font-medium text-bgray-600 hover:text-bgray-800"
-                        >
-                          Create product
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
+
                   <li className="item px-[43px] py-[11px]">
                     <Link href="/dashboard/auctions">
                       <span className="item-ico">

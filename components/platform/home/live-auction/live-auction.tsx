@@ -16,7 +16,7 @@ export default function TopAuction() {
   const { data: liveAuction, isLoading } = useGetAuctionsWithStatus(AuctionStatus.LIVE);
 
   // số 6 là live nhé mốt sửa đi chú
-  const auctionFilterByStatus = liveAuction?.data.filter((auction) => Number(auction.status)  ===  1)
+  const auctionFilterByStatus = liveAuction?.data.filter((auction) => Number(auction.status)  ===  6)
 
   return (
     <Section

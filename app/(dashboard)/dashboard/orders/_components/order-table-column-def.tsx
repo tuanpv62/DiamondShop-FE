@@ -12,14 +12,18 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-
 import { MdOutlinePending } from "react-icons/md";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { FcCancel } from "react-icons/fc";
 import { BiSolidBank } from "react-icons/bi";
 import { FaWallet } from "react-icons/fa";
 import { IOrder } from "@/types/dashboard";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { CircleDashed, Edit, Eye } from "lucide-react";
@@ -58,11 +62,13 @@ export function fetchOrderTableColumnDefs(
       enableHiding: false,
     },
     {
-      accessorKey: "id",
+      accessorKey: "orderId",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="OrderId" />
       ),
-      cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+      cell: ({ row }) => (
+        <div className="w-[80px]">{row.getValue("orderId")}</div>
+      ),
       enableSorting: false,
       enableHiding: false,
     },
@@ -82,32 +88,30 @@ export function fetchOrderTableColumnDefs(
       },
     },
     {
-      accessorKey: "productName",
+      accessorKey: "auctionName",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="productName" />
+        <DataTableColumnHeader column={column} title="auctionName" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("productName")}
-               
+              {row.getValue("auctionName")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "productCode",
+      accessorKey: "auctionCode",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="productCode" />
+        <DataTableColumnHeader column={column} title="auctionCode" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("productCode")}
-               
+              {row.getValue("auctionCode")}
             </span>
           </div>
         );
@@ -123,7 +127,6 @@ export function fetchOrderTableColumnDefs(
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
               {row.getValue("total")}
-               
             </span>
           </div>
         );
@@ -139,7 +142,6 @@ export function fetchOrderTableColumnDefs(
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
               {row.getValue("quantity")}
-               
             </span>
           </div>
         );
@@ -185,8 +187,8 @@ export function fetchOrderTableColumnDefs(
           </div>
         );
       },
-      filterFn: (row, id, value) => {
-        return value instanceof Array && value.includes(row.getValue(id));
+      filterFn: (row, orderId, value) => {
+        return value instanceof Array && value.includes(row.getValue(orderId));
       },
     },
     {
@@ -197,11 +199,11 @@ export function fetchOrderTableColumnDefs(
       cell: ({ row }) => {
         const status = row.original.status;
         const confirmed = row.original.confirmed; // boolean
-      
+
         let statusText;
         let statusIcon;
         let statusColor;
-        if (status === "PENDING") {
+        if (status === 0) {
           statusText = "Đang chờ thanh toán";
           statusIcon = (
             <MdOutlinePending
@@ -210,27 +212,16 @@ export function fetchOrderTableColumnDefs(
             />
           );
           statusColor = "text-yellow-500";
-        } else if (status === "CONFIRMED") {
-          if (confirmed) {
-            statusText = "Thanh toán hoàn tất";
-            statusColor = "text-green-500";
-            statusIcon = (
-              <FaRegCircleCheck
-                className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
-                aria-hidden="true"
-              />
-            );
-          } else {
-            statusText = "Chờ xác nhận";
-            statusColor = "text-orange-500";
-            statusIcon = (
-              <CircleDashed
-                className="mr-2 size-6 text-muted-foreground text-orange-500 font-bold"
-                aria-hidden="true"
-              />
-            );
-          }
-        } else if (status === "FAILED") {
+        } else if (status === 1) {
+          statusText = "Thanh toán hoàn tất";
+          statusColor = "text-green-500";
+          statusIcon = (
+            <FaRegCircleCheck
+              className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
+              aria-hidden="true"
+            />
+          );
+        } else if (status === 2) {
           statusText = "Thanh toán đơn bị hủy";
           statusIcon = (
             <FcCancel
@@ -249,7 +240,7 @@ export function fetchOrderTableColumnDefs(
           );
           statusColor = "";
         }
-      
+
         return (
           <div className="flex items-center bg-slate-700 w-full h-14 rounded-md px-2">
             <span>{statusIcon}</span>
@@ -257,8 +248,8 @@ export function fetchOrderTableColumnDefs(
           </div>
         );
       },
-      filterFn: (row, id, value) => {
-        return value instanceof Array && value.includes(row.getValue(id));
+      filterFn: (row, orderId, value) => {
+        return value instanceof Array && value.includes(row.getValue(orderId));
       },
     },
     {
@@ -275,25 +266,16 @@ export function fetchOrderTableColumnDefs(
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
-            {row.original.status === "CONFIRMED" && !row.original.confirmed ? (
-              <DropdownMenuItem
-                onClick={() =>
-                  onOpen("confirmOrder", { order: row.original })
-                }
-              >
-                <Edit className="mr-2 h-4 w-4" /> Confirm
-              </DropdownMenuItem>
-            ) : (
-              <DropdownMenuItem
-                onClick={() => onOpen("viewInfoOrder", { order: row.original })}
-              >
-                <Eye className="mr-2 h-4 w-4" /> View Details
-              </DropdownMenuItem>
-            )}
+         
+            <DropdownMenuItem
+              onClick={() => onOpen("viewInfoOrder", { order: row.original })}
+            >
+              <Eye className="mr-2 h-4 w-4" /> View Details
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ),
-    }
+    },
   ];
 }
 
@@ -318,7 +300,7 @@ export const filterableColumns: DataTableFilterableColumn<IOrder>[] = [
 
 export const searchableColumns: DataTableSearchableColumn<IOrder>[] = [
   {
-    id: "productName",
-    title: "productName",
+    id: "auctionName",
+    title: "auctionName",
   },
 ];

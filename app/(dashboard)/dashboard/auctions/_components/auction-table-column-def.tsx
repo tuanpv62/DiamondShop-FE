@@ -51,7 +51,8 @@ export function fetchAutionsTableColumnDefs(
   isPending: boolean,
   startTransition: React.TransitionStartFunction,
   router: AppRouterInstance,
-  onOpen: (type: ModalType, data: ModalData) => void
+  onOpen: (type: ModalType, data: ModalData) => void,
+  isAdmin: boolean
 ): ColumnDef<IAuction, unknown>[] {
   return [
     {
@@ -80,11 +81,13 @@ export function fetchAutionsTableColumnDefs(
       enableHiding: false,
     },
     {
-      accessorKey: "id",
+      accessorKey: "auctionId",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Auction ID" />
       ),
-      cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+      cell: ({ row }) => (
+        <div className="w-[80px]">{row.getValue("auctionId")}</div>
+      ),
       enableSorting: false,
       enableHiding: false,
     },
@@ -219,24 +222,24 @@ export function fetchAutionsTableColumnDefs(
         <DataTableColumnHeader column={column} title="Status" />
       ),
       cell: ({ row }) => {
-        const status = row.original.status;
+        const status = Number(row.original.status);
         if (!status) {
           return null;
         }
 
         return (
           <div className="flex items-center">
-            {status === "COMMING" ? (
+            {status === 5 ? (
               <AiOutlineClockCircle
                 className="mr-2 size-4 text-muted-foreground"
                 aria-hidden="true"
               />
-            ) : status === "LIVE" ? (
+            ) : status === 6 ? (
               <RiLiveFill
                 className="mr-2 size-4 text-muted-foreground"
                 aria-hidden="true"
               />
-            ) : status === "END" ? (
+            ) : status === 7 ? (
               <MdCloseFullscreen
                 className="mr-2 size-4 text-muted-foreground"
                 aria-hidden="true"
@@ -247,90 +250,110 @@ export function fetchAutionsTableColumnDefs(
                 aria-hidden="true"
               />
             )}
-            <span className="capitalize">{status}</span>
+            <span className="capitalize">
+              {status === 0
+                ? "PENDING"
+                : status === 1
+                ? "EVALUATE"
+                : status === 2
+                ? "WAITING"
+                : status === 3
+                ? "CONFIRM"
+                : status === 4
+                ? "APPROVE"
+                : status === 5
+                ? "COMING"
+                : status === 6
+                ? "BIDDING"
+                : status === 7
+                ? "END"
+                : "UNKNOWN"}
+            </span>
           </div>
         );
       },
-      filterFn: (row, id, value) => {
-        return value instanceof Array && value.includes(row.getValue(id));
-      },
-    },
-    {
-      accessorKey: "status",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Duyệt bài" />
-      ),
-      cell: ({ row }) => {
-        const status = row.original.status;
-
-        const isApprove = !!row.original.approved;
-        const isReject = !!row.original.rejected;
-
-        // nếu status = WAITING và isApprove = false và isReject = false  => Trạng thái Chờ duyệt bài
-        // nếu status = COMING và isApprove = true và is sReject = false  =>   Đã được duyệt
-        // nếu status = END và is isApprove = false và is sReject = true  => Ko dc duyệt
-
-        let statusText;
-        let statusIcon;
-        let statusColor;
-        if (status === "WAITING" && !isApprove && !isReject) {
-          statusText = "PENDING";
-          statusIcon = (
-            <MdOutlinePending
-              className="mr-2 size-6 text-muted-foreground text-yellow-500 font-bold"
-              aria-hidden="true"
-            />
-          );
-          statusColor = "text-yellow-500";
-        } else if (status !== "WAITING" && isApprove && !isReject) {
-          statusText = "APPROVE";
-          statusColor = "text-green-500";
-          statusIcon = (
-            <FaRegCircleCheck
-              className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
-              aria-hidden="true"
-            />
-          );
-        } else if (status === "LIVE" && isApprove && !isReject) {
-          statusText = "APPROVE";
-          statusColor = "text-green-500";
-          statusIcon = (
-            <FaRegCircleCheck
-              className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
-              aria-hidden="true"
-            />
-          );
-        } else if (status === "END" && isReject) {
-          statusText = "REJECT";
-          statusIcon = (
-            <FcCancel
-              className="mr-2 size-6 text-muted-foreground text-red-500 font-bold"
-              aria-hidden="true"
-            />
-          );
-          statusColor = "text-red-500";
-        } else {
-          statusText = "END";
-          statusIcon = (
-            <FcCancel
-              className="mr-2 size-6 text-muted-foreground text-red-500 font-bold"
-              aria-hidden="true"
-            />
-          );
-          statusColor = "text-red-500";
-        }
-
+      filterFn: (row, auctionId, value) => {
         return (
-          <div className="flex items-center bg-slate-700 w-full h-14 rounded-md px-2">
-            <span>{statusIcon}</span>
-            <span className={`capitalize ${statusColor}`}>{statusText}</span>
-          </div>
+          value instanceof Array && value.includes(row.getValue(auctionId))
         );
       },
-      filterFn: (row, id, value) => {
-        return value instanceof Array && value.includes(row.getValue(id));
-      },
     },
+    // {
+    //   accessorKey: "status",
+    //   header: ({ column }) => (
+    //     <DataTableColumnHeader column={column} title="Duyệt bài" />
+    //   ),
+    //   cell: ({ row }) => {
+    //     const status = row.original.status;
+
+    //     const isApprove = !!row.original.approved;
+    //     const isReject = !!row.original.rejected;
+
+    //     // nếu status = WAITING và isApprove = false và isReject = false  => Trạng thái Chờ duyệt bài
+    //     // nếu status = COMING và isApprove = true và is sReject = false  =>   Đã được duyệt
+    //     // nếu status = END và is isApprove = false và is sReject = true  => Ko dc duyệt
+
+    //     let statusText;
+    //     let statusIcon;
+    //     let statusColor;
+    //     if (status === "WAITING" && !isApprove && !isReject) {
+    //       statusText = "PENDING";
+    //       statusIcon = (
+    //         <MdOutlinePending
+    //           className="mr-2 size-6 text-muted-foreground text-yellow-500 font-bold"
+    //           aria-hidden="true"
+    //         />
+    //       );
+    //       statusColor = "text-yellow-500";
+    //     } else if (status !== "WAITING" && isApprove && !isReject) {
+    //       statusText = "APPROVE";
+    //       statusColor = "text-green-500";
+    //       statusIcon = (
+    //         <FaRegCircleCheck
+    //           className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
+    //           aria-hidden="true"
+    //         />
+    //       );
+    //     } else if (status === "LIVE" && isApprove && !isReject) {
+    //       statusText = "APPROVE";
+    //       statusColor = "text-green-500";
+    //       statusIcon = (
+    //         <FaRegCircleCheck
+    //           className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
+    //           aria-hidden="true"
+    //         />
+    //       );
+    //     } else if (status === "END" && isReject) {
+    //       statusText = "REJECT";
+    //       statusIcon = (
+    //         <FcCancel
+    //           className="mr-2 size-6 text-muted-foreground text-red-500 font-bold"
+    //           aria-hidden="true"
+    //         />
+    //       );
+    //       statusColor = "text-red-500";
+    //     } else {
+    //       statusText = "END";
+    //       statusIcon = (
+    //         <FcCancel
+    //           className="mr-2 size-6 text-muted-foreground text-red-500 font-bold"
+    //           aria-hidden="true"
+    //         />
+    //       );
+    //       statusColor = "text-red-500";
+    //     }
+
+    //     return (
+    //       <div className="flex items-center bg-slate-700 w-full h-14 rounded-md px-2">
+    //         <span>{statusIcon}</span>
+    //         <span className={`capitalize ${statusColor}`}>{statusText}</span>
+    //       </div>
+    //     );
+    //   },
+    //   filterFn: (row, auctionId, value) => {
+    //     return value instanceof Array && value.includes(row.getValue(auctionId));
+    //   },
+    // },
 
     {
       id: "actions",
@@ -346,14 +369,25 @@ export function fetchAutionsTableColumnDefs(
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
-            <DropdownMenuItem
-              onClick={() =>
-                router.push(`/dashboard/auction/${row.original.id}`)
-              }
-            >
-              <span>Chỉnh sửa </span>
-              <Edit className="ml-auto h-4 w-4" />
-            </DropdownMenuItem>
+            {isAdmin && Number(row.original.status) === 1 ? (
+              <DropdownMenuItem
+                onClick={() =>
+                  router.push(`/dashboard/auctions/${row.original.auctionId}`)
+                }
+              >
+                <span>Định giá</span>
+                <Edit className="ml-auto h-4 w-4" />
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                onClick={() =>
+                  router.push(`/dashboard/auctions/${row.original.auctionId}`)
+                }
+              >
+                <span>View</span>
+                <Edit className="ml-auto h-4 w-4" />
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
@@ -363,7 +397,7 @@ export function fetchAutionsTableColumnDefs(
                     startTransition(() => {
                       toast.promise(
                         updateStatusAuction({
-                          id: row.original.id,
+                          id: row.original.auctionId,
                           status: value as IAuction["status"],
                         }),
                         {
@@ -412,12 +446,15 @@ export function fetchAutionsTableColumnDefs(
               onClick={() => {
                 startTransition(() => {
                   row.toggleSelected(false);
-                  toast.promise(deleteAuction(row.original.id.toString()), {
-                    loading: "Deleting...",
-                    success: () => "Auction deleted successfully.",
-                    // error: (err: unknown) => catchError(err),
-                    error: () => "Dellete error",
-                  });
+                  toast.promise(
+                    deleteAuction(row.original.auctionId.toString()),
+                    {
+                      loading: "Deleting...",
+                      success: () => "Auction deleted successfully.",
+                      // error: (err: unknown) => catchError(err),
+                      error: () => "Dellete error",
+                    }
+                  );
                 });
               }}
             >

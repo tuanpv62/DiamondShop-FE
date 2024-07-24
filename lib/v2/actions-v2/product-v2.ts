@@ -85,13 +85,24 @@ export async function updateStatusProduct({
   }
 }
 
-export async function createProduct(data: IProductCreate): Promise<void> {
+export type Image = {
+  imageUrl: string;
+  imageCode: string;
+};
+export type IProductCreateV2 = {
+  productName: string;
+  title: string;
+  quantity: number;
+  productImageRequests?: Image[];
+  description: string;
+};
+export async function createProductV2(data: IProductCreateV2): Promise<void> {
   noStore();
 
   try {
     await axiosAuth.post(PRODUCTS_URLS_V2.GET_PRODUCTS, data);
 
-    revalidatePath("/dashboard/products");
+    revalidatePath("/");
   } catch (error) {
     console.log(error);
     throw error;

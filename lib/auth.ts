@@ -38,7 +38,7 @@ export const authOptions = {
         console.log("test", credentials);
         try {
           const res = await fetch(
-            "http://localhost:5000/api/v1/authentications/login",
+            "https://diamondshopapi.azurewebsites.net/api/v1/authentications/login",
             {
               method: "POST",
               headers: {

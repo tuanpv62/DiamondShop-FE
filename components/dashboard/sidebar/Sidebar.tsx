@@ -14,7 +14,14 @@ function Sidebar({ handleActive }: any) {
 
   const { data: session } = useSession();
 
-  const isAdmin = session?.user.role === "ADMIN";
+  const isAdmin =
+    session?.user.roleName?.toUpperCase() === "ADMIN" ||
+    session?.user.roleName?.toUpperCase() === "MANAGER";
+
+  const isStaff = session?.user.roleName?.toUpperCase() === "STAFF"; 
+
+
+  const haveAllPermission = isAdmin || isStaff;
 
   return (
     <aside className="sidebar-wrapper fixed top-0 z-30 block h-full w-[308px] bg-white dark:bg-darkblack-600 sm:hidden xl:block">
@@ -49,7 +56,7 @@ function Sidebar({ handleActive }: any) {
         <div className="nav-wrapper mb-[36px] pr-[50px]">
           <div className="item-wrapper mb-5">
             <h4 className="border-b border-bgray-200 text-sm font-medium leading-7 text-bgray-700 dark:border-darkblack-400 dark:text-bgray-50">
-              Menu
+              Bảng điều khiển
             </h4>
             <ul className="mt-2.5">
               <li className="item py-[11px] text-bgray-900 dark:text-white">
@@ -60,7 +67,7 @@ function Sidebar({ handleActive }: any) {
                         <Icons.dashboarSidebarIcon />
                       </span>
                       <span className="item-text text-lg font-medium leading-none">
-                        Dashboards
+                        Trang Chủ
                       </span>
                     </div>
                   </div>
@@ -75,7 +82,7 @@ function Sidebar({ handleActive }: any) {
                           <Icons.transactionSidebarIcon />
                         </span>
                         <span className="item-text text-lg font-medium leading-none">
-                          Transaction
+                          Giao dịch
                         </span>
                       </div>
                     </div>
@@ -109,7 +116,7 @@ function Sidebar({ handleActive }: any) {
                           <Icons.userSidebarIcon />
                         </span>
                         <span className="item-text text-lg font-medium leading-none">
-                          User
+                          Người Dùng
                         </span>
                       </div>
                       <span>
@@ -127,63 +134,21 @@ function Sidebar({ handleActive }: any) {
                         href="/dashboard/users"
                         className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
                       >
-                        View Info user
+                        Thông Tin Người Dùng
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         href="/dashboard/create-staff"
                         className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
                       >
                         Create
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </li>
               )}
 
-              <li
-                className="item py-[11px] text-bgray-900 dark:text-white"
-                onClick={() => setActiveProduct(!activeProduct)}
-              >
-                <a className="cursor-pointer">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2.5">
-                      <span className="item-ico ">
-                        <Icons.productSidebarIcon />
-                      </span>
-                      <span className="item-text text-lg font-medium leading-none">
-                        Product
-                      </span>
-                    </div>
-                    <span>
-                      <Icons.sidebarChevonLeftIcon />
-                    </span>
-                  </div>
-                </a>
-                <ul
-                  className={`sub-menu ml-2.5 mt-[22px] border-l border-success-100 pl-5 ${
-                    activeProduct && "active"
-                  }`}
-                >
-                  <li>
-                    <Link
-                      href="/dashboard/products"
-                      className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
-                    >
-                      View products
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/dashboard/products/create-product"
-                      className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
-                    >
-                      Create product
-                    </Link>
-                  </li>
-                </ul>
-              </li>
               <li
                 className="item py-[11px] text-bgray-900 dark:text-white"
                 onClick={() => setActiveAcution(!activeAcution)}
@@ -195,7 +160,7 @@ function Sidebar({ handleActive }: any) {
                         <Icons.auctionDashboardIcon />
                       </span>
                       <span className="item-text text-lg font-medium leading-none">
-                        Auction
+                        Đấu Giá
                       </span>
                     </div>
                     <span>
@@ -208,29 +173,42 @@ function Sidebar({ handleActive }: any) {
                     activeAcution && "active"
                   }`}
                 >
-                  <li>
-                    <Link
-                      href="/dashboard/auctions"
-                      className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
-                    >
-                      View auctions
-                    </Link>
-                  </li>
-                  <li>
+                  {haveAllPermission && (
+                    <li>
+                      <Link
+                        href="/dashboard/auctions"
+                        className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
+                      >
+                        Xem Danh Sách Đấu Giá
+                      </Link>
+                    </li>
+                  )}
+
+                  {/* <li>
                     <Link
                       href="/dashboard/auction/create-auctions"
                       className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
                     >
-                      Create auction
+                      Tạo Mới Đấu Giá
                     </Link>
-                  </li>
+                  </li> */}
                   {isAdmin && (
                     <li>
                       <Link
                         href="/dashboard/censorship"
                         className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
                       >
-                        Censorship auctions
+                        Kiểm Duyệt Sản Phẩm
+                      </Link>
+                    </li>
+                  )}
+                  {isAdmin && (
+                    <li>
+                      <Link
+                        href="/dashboard/evaluate"
+                        className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
+                      >
+                        Định giá sản phẩm
                       </Link>
                     </li>
                   )}
@@ -245,7 +223,7 @@ function Sidebar({ handleActive }: any) {
                         <Icons.historySidebarIcon />
                       </span>
                       <span className="item-text text-lg font-medium leading-none">
-                        Order
+                        Đơn Hàng
                       </span>
                     </div>
                   </div>
@@ -255,7 +233,7 @@ function Sidebar({ handleActive }: any) {
           </div>
           <div className="item-wrapper mb-5">
             <h4 className="border-b border-bgray-200 text-sm font-medium leading-7 text-bgray-700 dark:border-darkblack-400 dark:text-bgray-50">
-              Help
+              Trợ Giúp
             </h4>
             <ul className="mt-2.5">
               <li className="item py-[11px] text-bgray-900 dark:text-white">
@@ -266,7 +244,7 @@ function Sidebar({ handleActive }: any) {
                         <Icons.helpSidebarIcon />
                       </span>
                       <span className="item-text text-lg font-medium leading-none">
-                        Setting
+                        Cài Đặt
                       </span>
                     </div>
                   </div>
@@ -276,7 +254,7 @@ function Sidebar({ handleActive }: any) {
           </div>
           <div className="item-wrapper mb-5">
             <h4 className="border-b border-bgray-200 text-sm font-medium leading-7 text-bgray-700 dark:border-darkblack-400 dark:text-bgray-50">
-              Others
+              Khác
             </h4>
             <ul className="mt-2.5">
               <li className="item py-[11px] text-bgray-900 dark:text-white">
@@ -290,7 +268,7 @@ function Sidebar({ handleActive }: any) {
                         <Icons.logoutSidebardIcon />
                       </span>
                       <span className="item-text text-lg font-medium leading-none text-bgray-900 dark:text-white hover:text-green-300">
-                        Logout
+                        Đăng Xuất
                       </span>
                     </div>
                   </div>

@@ -55,7 +55,7 @@ export const ConfirmOrderModal = () => {
       React.startTransition(() => {
         toast.promise(
           confirmOrderDelivery({
-            orderId: data.order?.id,
+            orderId: data.order?.orderId,
             confirmed: true,
           }),
           {
@@ -97,7 +97,7 @@ export const ConfirmOrderModal = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="text-gray-600 mb-2">Mã đơn hàng:</p>
-            <p className="font-semibold">{data.order?.id}</p>
+            <p className="font-semibold">{data.order?.orderId}</p>
           </div>
           <div>
             <p className="text-gray-600 mb-2">Trạng thái:</p>
