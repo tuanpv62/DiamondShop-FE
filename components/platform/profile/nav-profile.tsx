@@ -89,6 +89,12 @@ async function NavMenu({ searchParams }: IndexPageProps) {
                           >
                             Transaction
                           </TabsTrigger>
+                          <TabsTrigger
+                            value="test"
+                            className="hover:bg-green-500 w-full  inline-block px-4 py-2 font-normal text-xl  text-gray-600 bg-white rounded"
+                          >
+                            Test
+                          </TabsTrigger>
                         </li>
                       </ul>
                     </TabsList>
@@ -120,6 +126,24 @@ async function NavMenu({ searchParams }: IndexPageProps) {
                         </Shell>
                       </TabsContent>
                       <TabsContent value="transactions">
+                        <Shell>
+                          <React.Suspense
+                            fallback={
+                              <DataTableSkeleton
+                                columnCount={4}
+                                filterableColumnCount={2}
+                              />
+                            }
+                          >
+                            <div className="overflow-x-auto">
+                              <TransactionTable
+                                transactionPromise={transactions}
+                              />
+                            </div>
+                          </React.Suspense>
+                        </Shell>
+                      </TabsContent>
+                      <TabsContent value="test">
                         <Shell>
                           <React.Suspense
                             fallback={

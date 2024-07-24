@@ -32,13 +32,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   });
 
   const images: TImage[] = product.productImages;
-
   const imageByIndex = (index: number): string => {
-    if (images.length > 0) {
+    if (images?.length > 0) {
       return images[index % images.length].image_url;
     }
     return "";
   };
+
 
   const onThumbClick = useCallback(
     (index: number) => {

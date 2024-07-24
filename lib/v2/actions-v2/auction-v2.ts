@@ -16,7 +16,7 @@ export async function getAuctionsWithStatusV2(
   status: string
 ): Promise<ApiListResponse<any>> {
   noStore();
-  console.log("gohere");
+  
   return await fetchListData(AUCTION_URLS_V2.GET_AUCTIONS);
 }
 
@@ -35,3 +35,5 @@ export async function getTableAuctionsV2(
 
   return await fetchListData(AUCTION_URLS_V2.GET_AUCTIONS, searchParams);
 }
+
+
