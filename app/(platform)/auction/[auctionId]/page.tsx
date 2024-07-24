@@ -10,11 +10,13 @@ import BiddingHistory from "./_components/bidding-history";
 import ListingDetails from "./_components/listing-detail-block";
 import ListingDetailsRealTime from "./_components/listing-detail-realtime";
 import ReviewBlock from "./_components/review";
+import { getAuctionByIDV2 } from "@/lib/v2/actions-v2/auction-v2";
 
 const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
-  const auction = await getAuctionByID(params.auctionId);
+  
+  const auction = await getAuctionByIDV2(params.auctionId);
   const feedback = getFeedBackAuction(params.auctionId);
-  const isLive = auction.data?.status === "LIVE";
+  const isLive = auction.data?.status === "1";
 
   // loading => client 
   // wating 
@@ -29,6 +31,7 @@ const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
 
       <div className="container mx-auto px-4 md:px-12 mt-10 mb-4 flex flex-col lg:flex-row">
         <LeftSideAuction productId={auction.data?.productID!} />
+
 
         <div className="w-full lg:w-3/5 md:pl-4">
           {isLive ? (

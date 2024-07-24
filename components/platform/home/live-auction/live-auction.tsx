@@ -9,8 +9,15 @@ import { useGetAuctionsWithStatus } from '@/lib/react-query/queries';
 import { AuctionStatus } from '@/types/dashboard';
 
 export default function TopAuction() {
+
+// ko có fill theo status .... Lậu :)
+
   const { state } = useTimeout();
   const { data: commingAuction, isLoading } = useGetAuctionsWithStatus(AuctionStatus.LIVE);
+
+  // số 5 là comming nhé mốt sửa đi chú
+  const auctionFilterByStatus = commingAuction?.data.filter((auction) => Number(auction.status)  ===  1)
+
   return (
     <Section
       title="Live Auction"
@@ -18,8 +25,8 @@ export default function TopAuction() {
       className="lg:container-fluid mt-12 pl-4 sm:pl-6 lg:mt-16"
       headerClassName="mb-4 md:mb-5 xl:mb-6"
     >
-      {!state && isLoading &&  <BlockLoader />}
-      {state && <DestinationCarousel data={commingAuction?.data!} />}
+      {!state && isLoading && <BlockLoader />}
+      {state && <DestinationCarousel data={auctionFilterByStatus!} />}
     </Section>
   );
 }

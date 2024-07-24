@@ -8,7 +8,7 @@ import { IAuction } from "@/types/dashboard";
 import PanigationAuctionPage from "@/app/(platform)/auction/_components/panigation-auction";
 
 interface AuctionListingProps {
-  liveAuction: IAuction[];
+  liveAuction: any[];
   auctionLoading: boolean;
 }
 
@@ -40,7 +40,7 @@ export default function AuctionListing({
           .map((item, index) => (
             <ListingCard
               key={`top-boat-grid-${index}`}
-              id={item.id}
+              id={item.auctionId}
               idCss={`top-boat-grid-${index}`}
               productName={item.productName}
               productCode={item.productCode}
