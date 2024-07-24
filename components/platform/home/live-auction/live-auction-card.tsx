@@ -13,7 +13,7 @@ interface LiveAuctionsCardProps {
   endDate: Date;
   id: number;
   image_url: string;
-  title: string
+  title: string;
 }
 
 export default function DestinationCard({
@@ -22,7 +22,7 @@ export default function DestinationCard({
   productName,
   productCode,
   endDate,
-  title
+  title,
 }: LiveAuctionsCardProps) {
   const countdown = useCountdownTimer(endDate.toString());
 

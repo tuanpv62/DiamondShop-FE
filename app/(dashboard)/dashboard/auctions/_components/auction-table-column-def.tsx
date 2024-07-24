@@ -348,7 +348,7 @@ export function fetchAutionsTableColumnDefs(
           <DropdownMenuContent align="end" className="w-[160px]">
             <DropdownMenuItem
               onClick={() =>
-                router.push(`/dashboard/auctions/${row.original.id}`)
+                router.push(`/dashboard/auction/${row.original.id}`)
               }
             >
               <span>Chỉnh sửa </span>
@@ -397,8 +397,8 @@ export function fetchAutionsTableColumnDefs(
             </DropdownMenuSub>
 
             {row.original.status === "COMING" &&
-              !!row.original.approved  &&
-              !row.original.rejected  && (
+              !!row.original.approved &&
+              !row.original.rejected && (
                 <DropdownMenuItem
                   onClick={() =>
                     onOpen("rejectAuction", { auction: row.original })

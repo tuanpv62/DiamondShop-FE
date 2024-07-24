@@ -4,7 +4,7 @@ import EmblaCarousel from "@/components/carousel/thumb-carousel";
 import React, { useEffect, useState } from "react";
 import { EmblaOptionsType } from "embla-carousel";
 import ContentLoader from "react-content-loader";
-import { api } from "@/lib/api-interceptor/api";
+import { api, axiosAuth } from "@/lib/api-interceptor/api";
 
 interface LeftSideAuctionProps {
   productId: number;
@@ -19,9 +19,11 @@ const LeftSideAuction = ({ productId }: LeftSideAuctionProps) => {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const res = await api.get(`/products/${productId}`);
+        const res = await axiosAuth.get(`/auctions/${productId}`);
 
         setProduct(res.data.payload);
+        console.log("test auction", res.data.payload);
+        console.log("test auction", product);
       } catch (error) {
         console.log(error);
       } finally {
@@ -39,7 +41,7 @@ const LeftSideAuction = ({ productId }: LeftSideAuctionProps) => {
   return (
     <div className="w-full lg:w-2/3">
       <EmblaCarousel
-        slides={Array.from(Array(product.productImages.length).keys())}
+        slides={Array.from(Array(product.ProductImages.length).keys())}
         options={OPTIONS}
         product={product}
       />

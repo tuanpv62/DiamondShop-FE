@@ -1,20 +1,20 @@
-import { getAuctionByID, getProducts } from "@/lib/actions";
+import { getProducts } from "@/lib/v2/actions-v2";
 import { AuctionForm } from "./_components/auction-form";
 
 import { IProductForm } from "@/types/dashboard";
+import { getAuctionByIDV2 } from "@/lib/v2/actions-v2/auction-v2";
 
 const AuctionDashboardPage = async ({
   params,
 }: {
   params: { auctionId: string };
 }) => {
-
   // limit 100 product actived
   const searchParams = { page: "1", per_page: "100", active: "true" };
 
   const products = await getProducts(searchParams);
 
-  const auction = await getAuctionByID(params.auctionId);
+  const auction = await getAuctionByIDV2(params.auctionId);
 
   const fotmatProducts: IProductForm[] = products.data.map((item) => ({
     productID: item.id,

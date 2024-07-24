@@ -121,7 +121,7 @@ function SidebarV2() {
                       </li>
                       <li>
                         <Link
-                          href="/dashboard/auctions/create-auctions"
+                          href="/dashboard/auction/create-auctions"
                           className="text-md inline-block py-1.5 font-medium text-bgray-600 hover:text-bgray-800"
                         >
                           Create auction
