@@ -6,12 +6,17 @@ import Section from "@/components/platform/section";
 import SeeMore from "@/components/platform/see-more";
 import ListingCardLoader from "@/components/loader/listing-card-loader";
 import ListingCard from "./comming-auction-card";
-import { useGetAuctionsWithStatus } from "@/lib/react-query/queries";
 import { AuctionStatus } from "@/types/dashboard";
+import { useGetAuctionsWithStatus } from "@/lib/v2/react-query-v2/queries-v2";
 
 function AuctionGrid() {
   const { data: commingAuction, isLoading } = useGetAuctionsWithStatus(
     AuctionStatus.COMING
+  );
+
+  // số 6 là live nhé mốt sửa đi chú
+  const auctionFilterByStatus = commingAuction?.data.filter(
+    (auction) => Number(auction.status) === 1
   );
   if (isLoading) {
     return <ListingCardLoader />;
@@ -19,7 +24,7 @@ function AuctionGrid() {
 
   return (
     <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:gap-y-10">
-      {commingAuction?.data.slice(0, 8).map((item, index) => (
+      {auctionFilterByStatus?.slice(0, 8).map((item, index) => (
         <ListingCard
           key={`top-boat-grid-${index}`}
           id={item.id}

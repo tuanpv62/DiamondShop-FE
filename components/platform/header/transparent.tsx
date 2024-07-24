@@ -16,7 +16,6 @@ export default function TransparentHeader() {
   const headerRef = useRef(null);
   addScrollingClass(headerRef);
   const { data: session } = useSession();
-
   const isAuthorized = session?.user;
   return (
     <header

@@ -34,9 +34,9 @@ export default function Menu() {
   const { onOpen } = useModal();
 
   const router = useRouter();
-  const isAuthorized = session?.user.name;
+  const isAuthorized = session?.user;
   // const isCustomer = session?.user.role === "CUSTOMER";
-
+// console.log("session header", session?.user);
   return (
     <nav className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-4">
       <ul className="hidden flex-wrap md:flex space-x-2">
