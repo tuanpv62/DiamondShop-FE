@@ -36,7 +36,7 @@ const FormPopoverUser = ({
   const { data: session } = useSession();
 
   const isAdmin =
-    session?.user.role === "ADMIN" || session?.user.role === "STAFF";
+    session?.user.roleName?.toUpperCase() === "ADMIN" || session?.user.roleName?.toUpperCase() === "STAFF";
 
   const router = useRouter();
 

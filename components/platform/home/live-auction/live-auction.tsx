@@ -5,18 +5,18 @@ import { useTimeout } from '@/hooks/use-timeout';
 import Section from '@/components/platform/section';
 import BlockLoader from '@/components/loader/block-loader';
 import DestinationCarousel from './live-auction-carousel';
-import { useGetAuctionsWithStatus } from '@/lib/react-query/queries';
 import { AuctionStatus } from '@/types/dashboard';
+import { useGetAuctionsWithStatus } from '@/lib/v2/react-query-v2/queries-v2';
 
 export default function TopAuction() {
 
 // ko có fill theo status .... Lậu :)
 
   const { state } = useTimeout();
-  const { data: commingAuction, isLoading } = useGetAuctionsWithStatus(AuctionStatus.LIVE);
+  const { data: liveAuction, isLoading } = useGetAuctionsWithStatus(AuctionStatus.LIVE);
 
-  // số 5 là comming nhé mốt sửa đi chú
-  const auctionFilterByStatus = commingAuction?.data.filter((auction) => Number(auction.status)  ===  1)
+  // số 6 là live nhé mốt sửa đi chú
+  const auctionFilterByStatus = liveAuction?.data.filter((auction) => Number(auction.status)  ===  1)
 
   return (
     <Section
