@@ -8,26 +8,29 @@ import {
 } from "@/lib/actions";
 import { IAuction } from "@/types/dashboard";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { startTransition } from "react";
 import { toast } from "sonner";
 
-interface IntegrationProps {
+interface EvaluateProps {
   auctionPromise: ReturnType<typeof getAuctionsWithStatus>;
 }
 
-const Integration = ({ auctionPromise }: IntegrationProps) => {
+const Evaluate = ({ auctionPromise }: EvaluateProps) => {
   const { data } = React.use(auctionPromise);
-
-  // filter with PENDING STATUS
-const auctionFilter = data.filter((auction: IAuction) => Number(auction.status) === 0)
+  // filter with EVALUATE STATUS
+  const auctionFilter = data.filter(
+    (auction: IAuction) => Number(auction.status) === 1
+  );
 
   const { onOpen } = useModal();
+  const router = useRouter();
 
   return (
     <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-6">
       {auctionFilter.length === 0 ? (
         <p className="text-gray-600 dark:text-gray-400 text-lg">
-          Hiện không có buổi đấu giá nào cần duyệt
+          Hiện không có sản phẩm nào cần định giá
         </p>
       ) : (
         auctionFilter.map((auction) => (
@@ -70,23 +73,11 @@ const auctionFilter = data.filter((auction: IAuction) => Number(auction.status) 
             <div className="flex justify-between space-x-4">
               <Button
                 onClick={() => {
-                  startTransition(() => {
-                    toast.promise(
-                      updateStatusAcceptAuction({
-                        id: auction.auctionId,
-                        approved: true,
-                      }),
-                      {
-                        loading: "Update...",
-                        success: () => "Auction update successfully.",
-                        error: () => "Dellete error",
-                      }
-                    );
-                  });
+                  router.push(`/dashboard/auctions/${auction.auctionId}`);
                 }}
                 className="text-base w-full text-green-600 font-medium h-12 rounded-md border border-green-600 hover:bg-green-600 hover:bg-opacity-75 hover:text-white transition-colors duration-300 ease-in-out"
               >
-                Duyệt
+                Định giá
               </Button>
               <Button
                 // onClick={() => {
@@ -107,7 +98,7 @@ const auctionFilter = data.filter((auction: IAuction) => Number(auction.status) 
                 onClick={() => onOpen("confirmAuction", { auction: auction })}
                 className="text-base w-full text-red-600 font-medium h-12 rounded-md border border-red-600 hover:bg-red-600 hover:bg-opacity-75 hover:text-white transition-colors duration-300 ease-in-out"
               >
-                Từ chối
+                Hủy
               </Button>
             </div>
           </div>
@@ -117,4 +108,4 @@ const auctionFilter = data.filter((auction: IAuction) => Number(auction.status) 
   );
 };
 
-export default Integration;
+export default Evaluate;

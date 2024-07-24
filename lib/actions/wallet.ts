@@ -8,10 +8,8 @@ import { ApiSingleResponse, fetchSingleData } from "@/lib/generics";
 export async function getWalletByUserId(
   params: string
 ): Promise<ApiSingleResponse<IWallet>> {
-  if (!params) {
-    return { data: null };
-  }
-  const url = `/wallets/get-balance-by-userId/${params}`;
+
+  const url = `/wallet/getwalletbyuserid`;
   return await fetchSingleData(url);
 
 }

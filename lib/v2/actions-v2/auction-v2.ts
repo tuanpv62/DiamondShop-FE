@@ -10,7 +10,7 @@ import {
   fetchListData,
   fetchSingleData,
 } from "../generics-v2";
-import { IAuction } from "@/types/dashboard";
+import { IAuction, IAuctionV2 } from "@/types/dashboard";
 
 export async function getAuctionsWithStatusV2(
   status: string
@@ -22,7 +22,7 @@ export async function getAuctionsWithStatusV2(
 
 export async function getAuctionByIDV2(
   params: string
-): Promise<ApiSingleResponse<IAuction>> {
+): Promise<ApiSingleResponse<IAuctionV2>> {
   noStore();
 
   return await fetchSingleData(AUCTION_URLS_V2.GET_AUCTION_BY_ID(params));
@@ -30,7 +30,7 @@ export async function getAuctionByIDV2(
 
 export async function getTableAuctionsV2(
   searchParams: SearchParams
-): Promise<ApiListResponse<IAuction>> {
+): Promise<ApiListResponse<IAuctionV2>> {
   noStore();
 
   return await fetchListData(AUCTION_URLS_V2.GET_AUCTIONS, searchParams);

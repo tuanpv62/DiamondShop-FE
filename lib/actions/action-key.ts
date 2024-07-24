@@ -6,7 +6,7 @@ export const PRODUCTS_URLS = {
 
 //auction
 export const AUCTION_URLS = {
-  GET_AUCTIONS: "/auctions/list",
+  GET_AUCTIONS: "/auctions",
   GET_AUCTION_BY_ID: (id: string) => `/auctions/${id}`,
   GET_AUCTIONS_DEFAULT_PER_PAGE: "/auctions/list?page=1&per_page=8",
   GET_AUCTIONS_DEFAULT_STATUS: (status: string) =>

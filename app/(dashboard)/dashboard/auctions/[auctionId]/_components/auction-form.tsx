@@ -27,7 +27,7 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 
-import { IAuction, IProductForm } from "@/types/dashboard";
+import { IAuction, IAuctionV2, IProductForm } from "@/types/dashboard";
 import { ImageUploadOne } from "@/components/image-cloudinary-upload/image-upload";
 
 import { toast } from "sonner";
@@ -44,20 +44,22 @@ import {
 } from "@/components/date-time-picker/date-time-picker";
 import { adjustTimeZoneOffset } from "@/hooks/use-countdown-time";
 import { auctionSchema } from "@/lib/schemas";
+import { useSession } from "next-auth/react";
 
 export type AuctionFormValues = z.infer<typeof auctionSchema>;
 
 interface AuctionFormProps {
   initialData: IAuction | null;
-  products: IProductForm[];
+  // products: IProductForm[];
 }
 
 export const AuctionForm: React.FC<AuctionFormProps> = ({
   initialData,
-  products,
+  // products,
 }) => {
   const params = useParams();
   const router = useRouter();
+  const { data: session } = useSession();
 
   const dateTimePickerRef = useRef<DateTimePickerRef>(null);
   const [open, setOpen] = useState(false);
@@ -70,6 +72,10 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
 
   const notPermissionAlowEdit = liveStatus || endStatus;
   const comingNotPermissionEdit = comingStatus;
+
+  const isAdmin =
+    session?.user.roleName?.toUpperCase() === "ADMIN" ||
+    session?.user.roleName?.toUpperCase() === "MANAGER";;
 
   const title = initialData ? "Chỉnh sửa buổi đấu giá" : "Tạo buổi đấu giá";
   const description = initialData
@@ -161,7 +167,7 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
     else return;
   };
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = form.formState.isSubmitting || !isAdmin;
 
   return (
     <>
@@ -172,8 +178,8 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <Heading title={title} description={description} />
-        {initialData && (
+        <Heading title={title} isAdmin={isAdmin} description={description} />
+        {initialData && isAdmin && (
           <Button
             disabled={loading}
             variant="destructive"
@@ -311,7 +317,7 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="productID"
               render={({ field }) => (
@@ -352,7 +358,7 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
                   <FormMessage className="dark:text-yellow-300" />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <FormField
               control={form.control}
@@ -425,16 +431,19 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
           </div>
 
           <div className="space-x-4">
+            {isAdmin ? (
+              <Button
+                disabled={isLoading || notPermissionAlowEdit}
+                variant="action"
+                className="ml-auto"
+                type="submit"
+              >
+                {action}
+              </Button>
+            ) : (
+              ""
+            )}
             <Button
-              disabled={isLoading || notPermissionAlowEdit}
-              variant="action"
-              className="ml-auto"
-              type="submit"
-            >
-              {action}
-            </Button>
-            <Button
-              disabled={isLoading}
               variant="outline"
               className="ml-auto"
               type="button"

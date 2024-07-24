@@ -14,10 +14,9 @@ interface HeaderTwoProps {
 }
 const HeaderTwo = ({ handleSidebar }: HeaderTwoProps) => {
   const { data: session } = useSession();
-  
+
   const [activePopup, handleActivePopup] = useState(false);
 
-  
   return (
     <div>
       <header className="mobile-wrapper fixed z-20 block w-full md:hidden ">
@@ -84,9 +83,7 @@ const HeaderTwo = ({ handleSidebar }: HeaderTwoProps) => {
                   width={profile.width}
                   className="object-cover"
                   src={
-                    session?.user.img
-                      ? session.user.img
-                      : "/images/avatar.jpg"
+                    session?.user.img ? session.user.img : "/images/avatar.jpg"
                   }
                   alt="avater"
                 />
@@ -172,7 +169,7 @@ const HeaderTwo = ({ handleSidebar }: HeaderTwoProps) => {
                             </div>
                             <div className="flex-1">
                               <span className="text-sm font-semibold">
-                                My Profile
+                                Thông tin người dùng
                               </span>
                             </div>
                           </div>
@@ -201,7 +198,7 @@ const HeaderTwo = ({ handleSidebar }: HeaderTwoProps) => {
                             </div>
                             <div className="flex-1">
                               <span className="text-sm font-semibold">
-                                Inbox
+                                Tin nhắn
                               </span>
                             </div>
                           </div>
@@ -230,7 +227,9 @@ const HeaderTwo = ({ handleSidebar }: HeaderTwoProps) => {
                           </div>
                           <div className="flex-1">
                             <span className="text-sm font-semibold">
-                              <Button onClick={() => signOut()} className="">Log Out</Button>
+                              <Button onClick={() => signOut()} className="">
+                                Đăng Xuất
+                              </Button>
                             </span>
                           </div>
                         </div>
@@ -244,7 +243,7 @@ const HeaderTwo = ({ handleSidebar }: HeaderTwoProps) => {
                         <Link href="/settings">
                           <div className="rounded-lg p-[14px] text-bgray-600 hover:bg-bgray-100 hover:text-bgray-900">
                             <span className="text-sm font-semibold">
-                              Settings
+                              Cài đặt
                             </span>
                           </div>
                         </Link>

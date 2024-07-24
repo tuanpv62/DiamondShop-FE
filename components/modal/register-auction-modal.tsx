@@ -52,7 +52,7 @@ export const RegiterAuctionModal = () => {
     setIsLoading(true);
 
     try {
-      const { success, error } = await registerAttendAuction(session?.user.id!, data.auction?.id.toString()!);
+      const { success, error } = await registerAttendAuction(session?.user.id!, data.auction?.auctionId.toString()!);
       if (success) {
         toast.success("Đăng kí đấu giá thành công");
         onClose();

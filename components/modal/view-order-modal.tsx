@@ -32,7 +32,7 @@ export const ViewOrderModal = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-gray-600 mb-2">Mã đơn hàng:</p>
-                    <p className="font-semibold">{data.order?.id}</p>
+                    <p className="font-semibold">{data.order?.orderId}</p>
                   </div>
                   <div>
                     <p className="text-gray-600 mb-2">Trạng thái:</p>
@@ -56,11 +56,11 @@ export const ViewOrderModal = () => {
                   </div>
                   <div>
                     <p className="text-gray-600 mb-2">Tên sản phẩm:</p>
-                    <p className="font-semibold">{data.order?.productName}</p>
+                    <p className="font-semibold">{data.order?.auctionName}</p>
                   </div>
                   <div>
                     <p className="text-gray-600 mb-2">Mã sản phẩm:</p>
-                    <p className="font-semibold">{data.order?.productCode}</p>
+                    <p className="font-semibold">{data.order?.auctionCode}</p>
                   </div>
                   <div>
                     <p className="text-gray-600 mb-2">Số lượng:</p>

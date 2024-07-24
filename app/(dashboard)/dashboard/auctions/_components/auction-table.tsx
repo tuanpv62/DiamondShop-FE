@@ -15,6 +15,7 @@ import {
 import { getTableAuctions } from "@/lib/actions/auction";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal";
+import { useSession } from "next-auth/react";
 
 interface AutionsTableProps {
   auctionPromise: ReturnType<typeof getTableAuctions>;
@@ -26,8 +27,24 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
   const router = useRouter();
   const { onOpen } = useModal();
   // console.log(data)
+  const { data: session } = useSession();
+
+  const isAdmin =
+    session?.user.roleName?.toUpperCase() === "ADMIN" ||
+    session?.user.roleName?.toUpperCase() === "MANAGER";
+
+    const evaluateAuction: IAuction[] = data.filter((item) => Number(item.status) === 1 )
+  
+
   const columns = React.useMemo<ColumnDef<IAuction, unknown>[]>(
-    () => fetchAutionsTableColumnDefs(isPending, startTransition, router, onOpen),
+    () =>
+      fetchAutionsTableColumnDefs(
+        isPending,
+        startTransition,
+        router,
+        onOpen,
+        isAdmin
+      ),
     [isPending, router, onOpen]
   );
 
@@ -38,17 +55,35 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
     searchableColumns,
     filterableColumns,
   });
+  const { dataTable: dataTable2 } = useDataTable({
+    data: evaluateAuction,
+    columns,
+    pageCount,
+    searchableColumns,
+    filterableColumns,
+  });
 
   return (
     <div className="space-y-4 overflow-hidden">
-      <DataTable
-        dataTable={dataTable}
-        columns={columns}
-        searchableColumns={searchableColumns}
-        filterableColumns={filterableColumns}
-        //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
-        //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
-      />
+      {isAdmin ? (
+        <DataTable
+          dataTable={dataTable}
+          columns={columns}
+          searchableColumns={searchableColumns}
+          filterableColumns={filterableColumns}
+          //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
+          //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
+        />
+      ) : (
+        <DataTable
+          dataTable={dataTable2}
+          columns={columns}
+          searchableColumns={searchableColumns}
+          filterableColumns={filterableColumns}
+          //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
+          //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
+        />
+      )}
     </div>
   );
 }

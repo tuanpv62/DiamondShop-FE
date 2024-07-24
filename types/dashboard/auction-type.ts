@@ -1,17 +1,15 @@
-
 export type IBidList = {
-  id: number,
-  ratings: number,
-  biddingPrice: number,
-  top1: boolean,
-  userID: number,
+  bidId: number;
+  ratings: number;
+  biddingPrice: number;
+  isTop1: boolean;
+  userID: number;
   auctionID: number;
   userName: string;
-}
-
+};
 
 export type IAuction = {
-  id: number;
+  auctionId: number;
   productID: number;
   productName: string;
   productCode: string;
@@ -22,7 +20,7 @@ export type IAuction = {
   description: string;
   // product: IProduct;
   title: string;
-  bidList: IBidList[]
+  bidList: IBidList[];
   biddingPrice?: number;
   image_url: string;
   quantity: number;
@@ -33,7 +31,33 @@ export type IAuction = {
   endDate?: Date;
   startDate?: Date;
   rejected: boolean;
-  approved: boolean
+  approved: boolean;
+};
+
+export type IAuctionV2 = {
+  auctionId: number;
+  productID: number;
+  productName: string;
+  productCode: string;
+  startPrice: number;
+  endPrice: number;
+  status: string;
+  depositPrice: number;
+  description: string;
+  // product: IProduct;
+  title: string;
+  bidList: IBidList[];
+  biddingPrice?: number;
+  image_url: string;
+  quantity: number;
+  modifiedBy: string;
+  created_at: Date;
+  updated_at: Date;
+  remindAt: Date;
+  endDate?: Date;
+  startDate?: Date;
+  rejected: boolean;
+  approved: boolean;
 };
 export type IAuctionCreateField = {
   quantity: number;
@@ -47,19 +71,17 @@ export type IAuctionCreateField = {
   image_url: string;
 };
 
-
 export type IFeedBack = {
-  id: number,
-  content: string,
-  auctionID: number,
-  img?: string,
-  name: string,
-  userID: number
-}
-
+  id: number;
+  content: string;
+  auctionID: number;
+  img?: string;
+  name: string;
+  userID: number;
+};
 
 export enum AuctionStatus {
-  LIVE = 'LIVE',
-  COMING = 'COMING',
-  END = 'END',
+  LIVE = "LIVE",
+  COMING = "COMING",
+  END = "END",
 }

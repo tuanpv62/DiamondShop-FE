@@ -10,7 +10,7 @@ export async function getOrders(
   searchParams: SearchParams
 ): Promise<ApiListResponse<IOrder>> {
   noStore();
-  const url = `/orders/list`;
+  const url = `/orders`;
 
   return await fetchListData(url, searchParams);
 }

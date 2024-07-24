@@ -9,7 +9,8 @@ import https from "https";
 // const baseURL = "http://128.199.185.211:8099/api/v1";
 // const baseURL = "https://orchid.fams.io.vn/api/v1/";
 // const baseURL = process.env.BASE_URL
-const baseURL = "http://localhost:5000/api/v1";
+// const baseURL = "http://localhost:5000/api/v1";
+const baseURL = "https://diamondshopapi.azurewebsites.net/api/v1";
 
 export const api = axios.create({
   baseURL,
@@ -34,27 +35,27 @@ axiosAuth.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-axiosAuth.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const session = await auth();
-    const prevRequest = error?.config;
-    if (error?.response?.status === 401 && !prevRequest?.sent) {
-      prevRequest.sent = true;
+// axiosAuth.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const session = await auth();
+//     const prevRequest = error?.config;
+//     if (error?.response?.status === 401 && !prevRequest?.sent) {
+//       prevRequest.sent = true;
 
-      const updatedSession = await refreshToken(session);
+//       const updatedSession = await refreshToken(session);
 
-      const sessionChange = await update({
-        user: {
-          accessToken: updatedSession,
-        },
-      });
+//       const sessionChange = await update({
+//         user: {
+//           accessToken: updatedSession,
+//         },
+//       });
 
-      prevRequest.headers[
-        "Authorization"
-      ] = `Bearer ${sessionChange?.user?.accessToken}`;
-      return axiosAuth(prevRequest);
-    }
-    return Promise.reject(error);
-  }
-);
+//       prevRequest.headers[
+//         "Authorization"
+//       ] = `Bearer ${sessionChange?.user?.accessToken}`;
+//       return axiosAuth(prevRequest);
+//     }
+//     return Promise.reject(error);
+//   }
+// );

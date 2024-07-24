@@ -7,7 +7,7 @@ export const PRODUCTS_URLS_V2 = {
 //auction
 export const AUCTION_URLS_V2 = {
   GET_AUCTIONS: "/auctions",
-  GET_AUCTION_BY_ID: (id: string) => `/auction/${id}`,
+  GET_AUCTION_BY_ID: (id: string) => `/auctions/${id}`,
   GET_AUCTIONS_DEFAULT_PER_PAGE: "/auction/list?page=1&per_page=8",
   GET_AUCTIONS_DEFAULT_STATUS: (status: string) =>
     `/auction/list?page=1&per_page=8&status=${status}`,

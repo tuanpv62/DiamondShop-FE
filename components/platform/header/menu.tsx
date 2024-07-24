@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import FormPopoverUser from "../popover-user-info";
 import UserAvatar from "../user-avatar";
-import { ShoppingBag, Wallet } from "lucide-react";
+import { ShoppingBag, Wallet, BadgePlus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 const menuItems = [
   {
@@ -51,8 +51,19 @@ export default function Menu() {
           </li>
         ))}
       </ul>
-      
-          {/* <NotificationDropdown/> */}
+
+      {/* <NotificationDropdown/> */}
+
+      {isAuthorized && (
+        <button onClick={() => router.push("/evaluate")}>
+          <div className=" hover:bg-slate-300 rounded-lg px-4 py-2 md:flex items-center cursor-pointer group hidden">
+            <div className="mr-2">
+              <BadgePlus className="text-black hover:text-red-600 group-hover:text-red-600" />
+            </div>
+            <div className="font-semibold ">Định giá</div>
+          </div>
+        </button>
+      )}
       {isAuthorized && (
         <button onClick={() => onOpen("walletModal", {})}>
           <div className=" hover:bg-slate-300 rounded-lg px-4 py-2 md:flex items-center cursor-pointer group hidden">

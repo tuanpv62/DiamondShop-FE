@@ -16,7 +16,7 @@ function AuctionGrid() {
 
   // số 6 là live nhé mốt sửa đi chú
   const auctionFilterByStatus = commingAuction?.data.filter(
-    (auction) => Number(auction.status) === 1
+    (auction) => Number(auction.status) === 5
   );
   if (isLoading) {
     return <ListingCardLoader />;
@@ -27,7 +27,7 @@ function AuctionGrid() {
       {auctionFilterByStatus?.slice(0, 8).map((item, index) => (
         <ListingCard
           key={`top-boat-grid-${index}`}
-          id={item.id}
+          id={item.auctionId}
           idCss={`top-boat-grid-${index}`}
           productName={item.productName}
           productCode={item.productCode}

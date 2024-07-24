@@ -23,7 +23,7 @@ export async function fetchListData<T>(
         pageSize: number;
         totalPagesCount: number;
       };
-    }> = await api.get(url, { params: searchParams });
+    }> = await axiosAuth.get(url, { params: searchParams });
 
     const { payload } = response.data;
     const { totalPagesCount } = response.data.metaData;
@@ -42,7 +42,7 @@ export async function fetchSingleData<T>(
   url: string
 ): Promise<ApiSingleResponse<T>> {
   try {
-    const response: AxiosResponse<{ payload: T }> = await api.get(url);
+    const response: AxiosResponse<{ payload: T }> = await axiosAuth.get(url);
 
     const { payload } = response.data;
 

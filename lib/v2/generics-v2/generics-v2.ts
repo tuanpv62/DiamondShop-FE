@@ -42,6 +42,7 @@ export async function fetchSingleData<T>(
   url: string
 ): Promise<ApiSingleResponse<T>> {
   try {
+
     const response: AxiosResponse<{ payload: T }> = await api.get(url);
 
     const { payload } = response.data;

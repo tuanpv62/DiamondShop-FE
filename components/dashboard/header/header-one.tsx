@@ -67,7 +67,7 @@ const HeaderOne = ({ handleSidebar }: HeaderOneProps) => {
         {/* page-title */}
         <div>
           <h3 className="text-xl font-bold text-bgray-900 dark:text-bgray-50 lg:text-3xl lg:leading-[36.4px]">
-            Dashboard
+            Trang Chủ
           </h3>
         </div>
         {/* search-bar */}
@@ -75,7 +75,6 @@ const HeaderOne = ({ handleSidebar }: HeaderOneProps) => {
         <div className="quick-access-wrapper relative">
           <div className="flex items-center space-x-[43px]">
             <div className="hidden items-center space-x-5 xl:flex">
-      
               <ToggleMode />
               <ToggleBtn
                 name="notification"

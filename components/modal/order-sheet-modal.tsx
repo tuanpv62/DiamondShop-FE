@@ -58,7 +58,7 @@ export const OrderSheet = () => {
           <ScrollArea className="w-full h-full ">
             <div className="py-4 mr-4">
               {orders?.data.map((order) => (
-                <div key={order.id}>
+                <div key={order.auctionID}>
                   <div className="transform transition duration-300 hover:scale-y-110 rounded-lg shadow-lg h-60 w-80 hover:shadow-xl bg-white">
                     <div className="bg-gradient-to-br from-rose-100 via-purple-200 to-purple-200 m-2 h-3/6 rounded-lg">
                       <Image
@@ -88,7 +88,7 @@ export const OrderSheet = () => {
                         <Button
                           variant="outline"
                           className="mr-2 px-4 py-2 rounded-md text-sm"
-                          onClick={() => router.push(`/order/${order.id}`)}
+                          onClick={() => router.push(`/order/${order.orderId}`)}
                         >
                           Thanh toán
                         </Button>
