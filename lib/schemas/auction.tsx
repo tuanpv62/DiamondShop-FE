@@ -1,9 +1,11 @@
 import { z } from "zod";
 
 const MIN_PRODUCT_QUANTITY = 1;
-const MIN_DEPOSIT_PRICE = 50000;
-const MIN_START_PRICE = 10000;
-const MIN_IMAGE_URL_LENGTH = 1;
+//TẠM THỜI ĐỂ NHỎ NHẤT
+const MIN_DEPOSIT_PRICE = 1;
+const MIN_START_PRICE = 1;
+//TẠM THƠI KHÔNG CẦN ẢNH
+const MIN_IMAGE_URL_LENGTH = 0;
 
 export const auctionSchema = z
   .object({
@@ -28,9 +30,9 @@ export const auctionSchema = z
       message: "Hãy thêm ít nhất 1 ảnh",
     }),
     title: z
-    .string()
-    .min(3, { message: "Hãy nhập title cho buổi đấu giá" })
-    .max(60, "Tên quá dài"),
+      .string()
+      .min(3, { message: "Hãy nhập title cho buổi đấu giá" })
+      .max(60, "Tên quá dài"),
     endDateInValid: z.any().nullish(),
     remindAtDateInValid: z.any().nullish(),
   })
@@ -39,8 +41,11 @@ export const auctionSchema = z
     params: { empty: "empty" },
     message: "Hãy nhập ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu",
   })
-  .refine((data) => data.startDate > data.remindAt && data.remindAt > new Date(), {
-    path: ["remindAtDateInValid"],
-    params: { empty: "empty" },
-    message: "Hãy nhập lời nhắc trước khi buổi đấu giá bắt đầu",
-  });
+  .refine(
+    (data) => data.startDate > data.remindAt && data.remindAt > new Date(),
+    {
+      path: ["remindAtDateInValid"],
+      params: { empty: "empty" },
+      message: "Hãy nhập lời nhắc trước khi buổi đấu giá bắt đầu",
+    }
+  );

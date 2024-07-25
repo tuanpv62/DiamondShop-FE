@@ -3,10 +3,15 @@
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { IAuction, IAuctionCreateField, IFeedBack } from "@/types/dashboard";
 import { SearchParams } from "@/types/table";
-import { ApiListResponse, ApiSingleResponse, fetchListData, fetchSingleData } from "@/lib/generics";
+import {
+  ApiListResponse,
+  ApiSingleResponse,
+  fetchListData,
+  fetchSingleData,
+} from "@/lib/generics";
 
 import axios from "axios";
-import {axiosAuth } from "@/lib/api-interceptor/api";
+import { axiosAuth } from "@/lib/api-interceptor/api";
 import { AUCTION_URLS, FEEDBACK_URLS } from "./action-key";
 
 export async function getAuctions(): Promise<ApiListResponse<IAuction>> {
@@ -57,11 +62,11 @@ export async function updateStatusAuction({ id, status }: AuctionStatusUpdate) {
 }
 export async function updateStatusAcceptAuction({ id, approved }: any) {
   try {
-   const res = await axiosAuth.put(AUCTION_URLS.UPDATE_AUCTIONS(id), {
+    const res = await axiosAuth.put(AUCTION_URLS.UPDATE_AUCTIONS(id), {
       approved: approved,
     });
 
-    console.log(res)
+    console.log(res);
 
     revalidatePath("/dashboard/auctions");
   } catch (error) {
@@ -84,6 +89,39 @@ export async function updateStatusRejectAuction({
     revalidatePath("/dashboard/auctions");
   } catch (error) {
     console.log("FALI to updateStatusRejectAuction");
+  }
+}
+
+export async function updateEvaluate({ id, values }: any) {
+  try {
+
+    console.log("vinh", values)
+    const res = await axiosAuth.put(
+      AUCTION_URLS.UPDATE_AUCTIONS_SET_WAITING(id),
+      {
+        values,
+      }
+    );
+
+    revalidatePath("/dashboard/auctions");
+  } catch (error) {
+    console.log("FALI to dinh gia");
+  }
+}
+export async function updateReEvaluate({ id, values }: any) {
+  try {
+
+    console.log("tuan", values)
+    const res = await axiosAuth.put(
+      AUCTION_URLS.UPDATE_AUCTIONS_SET_APPROVE(id),
+      {
+        values,
+      }
+    );
+
+    revalidatePath("/dashboard/auctions");
+  } catch (error) {
+    console.log("FALI to dinh gia");
   }
 }
 

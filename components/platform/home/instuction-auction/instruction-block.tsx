@@ -98,7 +98,7 @@ export default function InstructionBlock() {
   return (
     <Section
       className="group/section instruction-section lg:container-fluid mt-12 pl-4 sm:pl-6 lg:mt-16"
-      title="Cách tham gia đấu giá hoa lan"
+      title="Cách tham gia đấu giá "
       description="Không thể mãn nguyện, nó được xem xét là một lời mời khi đi du lịch vô cảm."
       headerClassName="mb-4 md:mb-5 xl:mb-6"
     >

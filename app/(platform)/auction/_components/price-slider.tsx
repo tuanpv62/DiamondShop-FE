@@ -45,9 +45,10 @@ const PriceSlider = ({
             Min Price: {values[0]}
           </label>
         </div>
-        <div className="flex flex-col w-1/4">
-          <label htmlFor="maxPrice" className="text-gray-700 mb-1">
-            Max Price:{values[1]}
+        <div className="flex flex-col w-1/4 mr-4">
+          <p className="text-gray-700 mb-1 mr-2">Max Price:</p>
+          <label htmlFor="maxPrice" className="text-gray-700 mb-4 ">
+            {values[1]}
           </label>
         </div>
       </div>

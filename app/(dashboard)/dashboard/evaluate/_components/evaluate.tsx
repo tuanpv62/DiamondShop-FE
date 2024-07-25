@@ -51,7 +51,7 @@ const Evaluate = ({ auctionPromise }: EvaluateProps) => {
               </div>
               <div>
                 <h3 className="text-2xl text-gray-800 dark:text-white font-bold">
-                  {auction.productName}
+                  {auction.auctionId}
                 </h3>
                 <span className="text-lg text-gray-600 dark:text-gray-400">
                   Mã code {auction.productCode}
@@ -72,9 +72,7 @@ const Evaluate = ({ auctionPromise }: EvaluateProps) => {
 
             <div className="flex justify-between space-x-4">
               <Button
-                onClick={() => {
-                  router.push(`/dashboard/auctions/${auction.auctionId}`);
-                }}
+                onClick={() => onOpen("evaluateModal", { auction: auction })}
                 className="text-base w-full text-green-600 font-medium h-12 rounded-md border border-green-600 hover:bg-green-600 hover:bg-opacity-75 hover:text-white transition-colors duration-300 ease-in-out"
               >
                 Định giá

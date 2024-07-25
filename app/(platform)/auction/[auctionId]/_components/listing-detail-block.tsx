@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { vendorData } from "@/data/user-working-data/listing-details";
 import { Button } from "@/components/ui/button";
 
@@ -27,7 +27,7 @@ interface ListingDetailsProps {
 
 export default function ListingDetails({ auction }: ListingDetailsProps) {
   const minimumPrice = auction?.startPrice || 0;
-  const biddingPrice = auction?.biddingPrice || minimumPrice 
+  const biddingPrice = auction?.biddingPrice || minimumPrice;
 
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
@@ -49,7 +49,7 @@ export default function ListingDetails({ auction }: ListingDetailsProps) {
     },
   });
 
-  const isRegisterAuction = auction?.bidList.some(
+  const isRegisterAuction = auction?.bidList?.some(
     (item) => item.userID.toString() === session?.user.id
   );
   const isStatusComing = auction?.status === "COMING";
@@ -62,8 +62,12 @@ export default function ListingDetails({ auction }: ListingDetailsProps) {
       try {
         setIsLoading(true);
         const userId = session?.user.id!;
-        const auctionId = auction.id.toString();
-        const { success, error } = await biddingAuction(userId, auctionId, bidAmount);
+        const auctionId = auction.auctionId.toString();
+        const { success, error } = await biddingAuction(
+          userId,
+          auctionId,
+          bidAmount
+        );
         if (success) {
           toast.success("Tăng giá thành công");
         } else if (error) {
@@ -77,8 +81,8 @@ export default function ListingDetails({ auction }: ListingDetailsProps) {
       } finally {
         setIsLoading(false);
       }
-    }else{
-      toast.error("Thời gian không thích hợp để đấu giá")
+    } else {
+      toast.error("Thời gian không thích hợp để đấu giá");
     }
   };
 
@@ -110,8 +114,8 @@ export default function ListingDetails({ auction }: ListingDetailsProps) {
 
           <div className="bg-slate-200 p-4 rounded-md">
             <div className="space-y-3">
-            <h1 className="font-bold text-2xl space-y-2">Đấu giá ngay</h1>
-            <p>Giá đấu giá hiện tại là : ${biddingPrice}</p>
+              <h1 className="font-bold text-2xl space-y-2">Đấu giá ngay</h1>
+              <p>Giá đấu giá hiện tại là : ${biddingPrice}</p>
             </div>
 
             <div className="flex items-center space-x-4">
@@ -154,11 +158,13 @@ export default function ListingDetails({ auction }: ListingDetailsProps) {
 
             <div className="mt-4 relative">
               <Button
-               onClick={() =>  handleBidding(biddingPrice + auction?.depositPrice!)}
+                onClick={() =>
+                  handleBidding(biddingPrice + auction?.depositPrice!)
+                }
                 disabled={!canBid || isLoading}
                 className="bg-gray-300 absolute top-[-56px] left-[140px] text-gray-700 py-2 px-4 rounded-lg hover:bg-green-400 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                      Raise (${auction?.depositPrice})
+                Raise (${auction?.depositPrice})
               </Button>
             </div>
           </div>

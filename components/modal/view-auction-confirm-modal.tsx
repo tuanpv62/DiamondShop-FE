@@ -49,7 +49,7 @@ export const ViewConfirmModal = () => {
     React.startTransition(() => {
       toast.promise(
         updateStatusRejectAuction({
-          id: data.auction?.id,
+          id: data.auction?.auctionId,
           rejected: true,
           reasonReject: values.reasonReject,
         }),

@@ -70,7 +70,7 @@ export default function LiveAuctions() {
     <Section
       className="group/section container-fluid mt-12 overflow-hidden lg:mt-16"
       title="Coming Auction"
-      description="Hãy Tham Gia Cùng Chúng Tôi Cho Một Buổi Đấu Giá Buổi Tối Đầy Mê Hoặc Của Những Bông Hoa Hiếm Và Kỳ Lạ."
+      description="Hãy Tham Gia Cùng Chúng Tôi Cho Một Buổi Đấu Giá Buổi Tối Đầy Mê Hoặc Của Những Viên Đá Quý Hiếm Và Đặc Biệt."
       headerClassName="items-end mb-4 md:mb-5 xl:mb-6 gap-5"
       rightElement={<SeeMore />}
     >
