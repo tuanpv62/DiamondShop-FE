@@ -29,10 +29,10 @@ import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 import { updateReEvaluate } from "@/lib/actions";
 
-export const ViewEvaluateModal = () => {
+export const ViewReEvaluateModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const { data: session } = useSession();
-  const isOpenModal = isOpen && type === "evaluateModal";
+  const isOpenModal = isOpen && type === "reEvaluateModal";
 
   //   {
   //   "valuation": 0.01,

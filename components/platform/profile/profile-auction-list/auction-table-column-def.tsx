@@ -370,64 +370,34 @@ export function fetchAutionsTableColumnDefs(
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
-              <DropdownMenuSubContent>
-                <DropdownMenuRadioGroup
-                  value={row.original.status}
-                  onValueChange={(value) => {
-                    startTransition(() => {
-                      toast.promise(
-                        updateStatusAuction({
-                          id: row.original.auctionId,
-                          status: value as IAuction["status"],
-                        }),
-                        {
-                          loading: "Update...",
-                          success: () => "Auction update successfully.",
-                          // error: (err: unknown) => catchError(err),
-                          error: () => "Dellete error",
-                        }
-                      );
-                    });
-                  }}
-                >
-                  {["APPROVE", "REEVALUATE"].map((status) => {
-                    const isDisabled = isStatusDisabled(
-                      row.original.status,
-                      status
-                    );
-                    return (
-                      <DropdownMenuRadioItem
-                        // onClick={() =>
-                        //   onOpen("reEvaluateModal", {
-                        //     auction: ReEvaluateSchema,
-                        //   })
-                        // }
-                        key={status}
-                        value={status}
-                        className="capitalize"
-                        disabled={isDisabled}
-                      >
-                        {status}
-                      </DropdownMenuRadioItem>
-                    );
-                  })}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
+            {Number(row.original.status) === 2 && (
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Trạng thái</DropdownMenuSubTrigger>
 
-            {row.original.status === "COMING" &&
-              !!row.original.approved &&
-              !row.original.rejected && (
-                <DropdownMenuItem
-                  onClick={() =>
-                    onOpen("rejectAuction", { auction: row.original })
-                  }
-                >
-                  <Eye className="mr-2 h-4 w-4" /> Can thiệp
-                </DropdownMenuItem>
-              )}
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      onOpen("rejectAuction", { auction: row.original })
+                    }
+                  >
+              
+
+                    <Eye className="mr-2 h-4 w-4" />
+                    Chấp thuận giá
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() =>
+                      onOpen("reEvaluateModal", { auction: row.original })
+                    }
+                  >
+                    <Eye className="mr-2 h-4 w-4" />
+                    Định giá lại
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            )}
+
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => {
