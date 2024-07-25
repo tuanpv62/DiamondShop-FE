@@ -94,8 +94,7 @@ export async function updateStatusRejectAuction({
 
 export async function updateEvaluate({ id, values }: any) {
   try {
-
-    console.log("vinh", values)
+    console.log("vinh", values);
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_SET_WAITING(id),
       {
@@ -110,8 +109,7 @@ export async function updateEvaluate({ id, values }: any) {
 }
 export async function updateReEvaluate({ id, values }: any) {
   try {
-
-    console.log("tuan", values)
+    console.log("tuan", values);
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_SET_APPROVE(id),
       {
@@ -130,6 +128,15 @@ export async function deleteAuction(params: string) {
     await axiosAuth.delete(AUCTION_URLS.GET_AUCTION_BY_ID(params));
 
     revalidatePath("/dashboard/auctions");
+  } catch (error) {
+    console.log("Fail to delete: ", error);
+  }
+}
+export async function setApproveAuction(params: string) {
+  try {
+    await axiosAuth.put(AUCTION_URLS.UPDATE_AUCTIONS_SET_APPROVE(params));
+
+    revalidatePath("/");
   } catch (error) {
     console.log("Fail to delete: ", error);
   }

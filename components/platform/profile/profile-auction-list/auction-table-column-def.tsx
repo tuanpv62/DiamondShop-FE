@@ -37,6 +37,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
 import {
   deleteAuction,
+  setApproveAuction,
   updateReEvaluate,
   updateStatusAcceptAuction,
   updateStatusAuction,
@@ -376,12 +377,25 @@ export function fetchAutionsTableColumnDefs(
 
                 <DropdownMenuSubContent>
                   <DropdownMenuItem
-                    onClick={() =>
-                      onOpen("rejectAuction", { auction: row.original })
-                    }
-                  >
-              
+                    // onClick={() =>
+                    //   onOpen("rejectAuction", { auction: row.original })
 
+                    // }
+                    onClick={() => {
+                      startTransition(() => {
+                        row.toggleSelected(false);
+                        toast.promise(
+                          setApproveAuction(row.original.auctionId.toString()),
+                          {
+                            loading: "Update...",
+                            success: () => "Auction approve successfully.",
+                            // error: (err: unknown) => catchError(err),
+                            error: () => "approve error",
+                          }
+                        );
+                      });
+                    }}
+                  >
                     <Eye className="mr-2 h-4 w-4" />
                     Chấp thuận giá
                   </DropdownMenuItem>
