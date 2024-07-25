@@ -5,27 +5,27 @@ import { InstructionIconFour } from "@/components/icons/instruction/instruction-
 
 export const instructions = [
   {
-    title: "Xem Các Loài Hoa Lan Đang Có",
+    title: "Xem Các loại đá Đang Có",
     description:
-      "Khám phá bộ sưu tập các loài hoa lan độc đáo và hiếm có đang được đấu giá.",
+      "Khám phá bộ sưu tập các đá quý độc đáo và hiếm có đang được đấu giá.",
     icon: <InstructionIconOne />,
   },
   {
     title: "Đặt Giá Của Bạn",
     description:
-      "Chọn những loài hoa lan mà bạn mong muốn và đặt giá với sự tự tin.",
+      "Chọn viên đá quý mà bạn mong muốn và đặt giá với sự tự tin.",
     icon: <InstructionIconTwo />,
   },
   {
-    title: "Nhiều Địa Điểm Nhận Hoa",
+    title: "Nhiều Địa Điểm Nhận đá",
     description:
-      "Sau khi chiến thắng, hãy chọn từ các địa điểm khác nhau để nhận các loài hoa lan quý giá của bạn.",
+      "Sau khi chiến thắng, hãy chọn từ các địa điểm khác nhau để nhận những viên đá quý giá của bạn.",
     icon: <InstructionIconThree />,
   },
   {
-    title: "Những Người Yêu Thích Hoa Lan Hài Lòng",
+    title: "Những Người Đam Mê Đá Quý Hài Lòng",
     description:
-      "Tham gia cộng đồng những người yêu thích hoa lan hài lòng đã tìm thấy những bông hoa hoàn hảo của mình.",
+      "Tham gia cộng đồng những người yêu thích đá quý hài lòng đã tìm thấy những viên đá hoàn hảo của mình.",
     icon: <InstructionIconFour />,
   },
 ];

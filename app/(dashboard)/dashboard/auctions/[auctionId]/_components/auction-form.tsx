@@ -45,6 +45,7 @@ import {
 import { adjustTimeZoneOffset } from "@/hooks/use-countdown-time";
 import { auctionSchema } from "@/lib/schemas";
 import { useSession } from "next-auth/react";
+import { createAuctionV3, updateAuctionDetailV2 } from "@/lib/v2/actions-v2/auction-v2";
 
 export type AuctionFormValues = z.infer<typeof auctionSchema>;
 
@@ -75,7 +76,7 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
 
   const isAdmin =
     session?.user.roleName?.toUpperCase() === "ADMIN" ||
-    session?.user.roleName?.toUpperCase() === "MANAGER";;
+    session?.user.roleName?.toUpperCase() === "MANAGER";
 
   const title = initialData ? "Chỉnh sửa buổi đấu giá" : "Tạo buổi đấu giá";
   const description = initialData
@@ -134,10 +135,10 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await updateAuctionDetail(params.auctionId as string, value);
+        await updateAuctionDetailV2(params.auctionId as string, value);
       } else {
-        await createAuction(value);
-        router.push("/dashboard/auctions");
+        await createAuctionV3(value);
+        router.push("/dashboard/evaluate");
         form.reset();
       }
 
@@ -156,7 +157,7 @@ export const AuctionForm: React.FC<AuctionFormProps> = ({
 
         await deleteAuction(params.auctionId as string);
 
-        router.push(`/dashboard/auctions`);
+        router.push(`/dashboard/evaluate`);
         toast.success("auctions deleted.");
       } catch (error: any) {
         toast.error("Đã có lỗi.");

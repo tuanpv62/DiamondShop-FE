@@ -2,6 +2,7 @@
 
 import { ConfirmOrderModal } from "@/components/modal/confirm-order-modal";
 import { EstimateProductModal } from "@/components/modal/estimate-product";
+import { ViewEvaluateModal } from "@/components/modal/evaluate-auciton-modal";
 import { FeedBackModal } from "@/components/modal/feedback-modal";
 import { OrderSheet } from "@/components/modal/order-sheet-modal";
 import { RegiterAuctionModal } from "@/components/modal/register-auction-modal";
@@ -28,5 +29,6 @@ export const ModalProvider = () => {
     <ViewConfirmModal/>
     <FeedBackModal/>
     <EstimateProductModal/>
+    <ViewEvaluateModal/>
   </>;
 };

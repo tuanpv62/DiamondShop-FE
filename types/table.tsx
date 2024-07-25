@@ -1,27 +1,27 @@
 export interface SearchParams {
-    [key: string] : string | string[] | undefined
+  [key: string]: string | string[] | undefined;
 }
 
 export type Option = {
-    label: string,
-    value: string,
-    icon?: React.ComponentType<{className?: string}>
-}
+  label: string;
+  value: string;
+  icon?: React.ComponentType<{ className?: string }>;
+};
 
 export interface DataTableFilterOption<TData> {
-    id?: string
-    label: string
-    value: keyof TData | string
-    items: Option[]
-    isMulti?: boolean
-  }
+  id?: string;
+  label: string;
+  value: keyof TData | string;
+  items: Option[];
+  isMulti?: boolean;
+}
 
 export interface DataTableSearchableColumn<TData> {
-    id: keyof TData
-    title: string
-  }
-  
-  export interface DataTableFilterableColumn<TData>
-    extends DataTableSearchableColumn<TData> {
-    options: Option[]
-  }
+  id?: keyof TData;
+  title: string;
+}
+
+export interface DataTableFilterableColumn<TData>
+  extends DataTableSearchableColumn<TData> {
+  options: Option[];
+}

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { vendorData } from "@/data/user-working-data/listing-details";
 import { Button } from "@/components/ui/button";
 
@@ -24,12 +24,12 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
 
 interface ListingDetailsProps {
-
-  auctionId: string
+  auctionId: string;
 }
 
-export default function ListingDetailsRealTime({ auctionId}: ListingDetailsProps) {
-
+export default function ListingDetailsRealTime({
+  auctionId,
+}: ListingDetailsProps) {
   const [auctionData, setAuctionData] = useState<IAuction | null>(null);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function ListingDetailsRealTime({ auctionId}: ListingDetailsProps
     };
   }, [auctionId]);
   const minimumPrice = auctionData?.startPrice || 0;
-  const biddingPrice = auctionData?.biddingPrice || minimumPrice 
+  const biddingPrice = auctionData?.biddingPrice || minimumPrice;
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
   const { onOpen } = useModal();
@@ -78,8 +78,12 @@ export default function ListingDetailsRealTime({ auctionId}: ListingDetailsProps
       try {
         setIsLoading(true);
         const userId = session?.user.id!;
-        const auctionId = auctionData.id.toString();
-        const { success, error } = await biddingAuction(userId, auctionId, bidAmount);
+        const auctionId = auctionData.auctionId.toString();
+        const { success, error } = await biddingAuction(
+          userId,
+          auctionId,
+          bidAmount
+        );
         if (success) {
           toast.success("Tăng giá thành công");
         } else if (error) {
@@ -93,8 +97,8 @@ export default function ListingDetailsRealTime({ auctionId}: ListingDetailsProps
       } finally {
         setIsLoading(false);
       }
-    }else{
-      toast.error("Thời gian không thích hợp để đấu giá")
+    } else {
+      toast.error("Thời gian không thích hợp để đấu giá");
     }
   };
 
@@ -109,7 +113,9 @@ export default function ListingDetailsRealTime({ auctionId}: ListingDetailsProps
           {!isRegisterAuction && isStatusComing && (
             <Button
               variant="primary"
-              onClick={() => onOpen("registerAtendAction", { auction: auctionData })}
+              onClick={() =>
+                onOpen("registerAtendAction", { auction: auctionData })
+              }
               className="mt-6"
             >
               Open Register Auction
@@ -126,8 +132,8 @@ export default function ListingDetailsRealTime({ auctionId}: ListingDetailsProps
 
           <div className="bg-slate-200 p-4 rounded-md">
             <div className="space-y-3">
-            <h1 className="font-bold text-2xl space-y-2">Đấu giá ngay</h1>
-            <p>Giá đấu giá hiện tại là : ${biddingPrice}</p>
+              <h1 className="font-bold text-2xl space-y-2">Đấu giá ngay</h1>
+              <p>Giá đấu giá hiện tại là : ${biddingPrice}</p>
             </div>
 
             <div className="flex items-center space-x-4">
@@ -170,7 +176,9 @@ export default function ListingDetailsRealTime({ auctionId}: ListingDetailsProps
 
             <div className="mt-4 relative">
               <Button
-                onClick={() =>  handleBidding(biddingPrice + auctionData?.depositPrice!)}
+                onClick={() =>
+                  handleBidding(biddingPrice + auctionData?.depositPrice!)
+                }
                 disabled={!canBid || isLoading}
                 className="bg-gray-300 absolute top-[-56px] left-[140px] text-gray-700 py-2 px-4 rounded-lg hover:bg-green-400 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >

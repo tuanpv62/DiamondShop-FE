@@ -11,11 +11,12 @@ export type ModalType =
   | "rejectAuction"
   | "feedBack"
   | "estimateProduct"
-  ;
+  | "evaluateModal"
+  | "reEvaluateModal";
 
 export interface ModalData {
   auction?: IAuctionV2;
-  order?: IOrder
+  order?: IOrder;
 }
 
 interface ModalStore {

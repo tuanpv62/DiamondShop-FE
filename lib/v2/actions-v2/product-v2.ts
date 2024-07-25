@@ -93,7 +93,7 @@ export type IProductCreateV2 = {
   productName: string;
   title: string;
   quantity: number;
-  productImageRequests?: Image[];
+  productImageRequests: Image[];
   description: string;
 };
 export async function createProductV2(data: IProductCreateV2): Promise<void> {

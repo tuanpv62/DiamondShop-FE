@@ -18,8 +18,7 @@ function Sidebar({ handleActive }: any) {
     session?.user.roleName?.toUpperCase() === "ADMIN" ||
     session?.user.roleName?.toUpperCase() === "MANAGER";
 
-  const isStaff = session?.user.roleName?.toUpperCase() === "STAFF"; 
-
+  const isStaff = session?.user.roleName?.toUpperCase() === "STAFF";
 
   const haveAllPermission = isAdmin || isStaff;
 
@@ -285,9 +284,9 @@ function Sidebar({ handleActive }: any) {
             <a
               href="#"
               target="_blank"
-              className="border-b font-semibold hover:text-blue-600"
+              className="border-b font-semibold hover:text-blue-600 ml-1"
             >
-              Vinh Nguyễn
+              Diamond Shop
             </a>
           </p>
         </div>

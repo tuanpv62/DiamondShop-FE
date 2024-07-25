@@ -18,6 +18,8 @@ import { OrderTable } from "./profile-order/order-table";
 import { auth } from "@/lib/auth";
 import { getTransactionByUserId } from "@/lib/actions/transaction";
 import { TransactionTable } from "./profile-transaction/transaction-table";
+import { getAuctionByUserIdV2, getTableAuctionsV2withUser } from "@/lib/v2/actions-v2/auction-v2";
+import { AuctionTable } from "./profile-auction-list/auction-table";
 
 export interface IndexPageProps {
   searchParams: SearchParams;
@@ -26,6 +28,12 @@ async function NavMenu({ searchParams }: IndexPageProps) {
   const session = await auth();
   const orders = getOrdersByUserId(searchParams, session?.user.id!);
   const transactions = getTransactionByUserId(searchParams, session?.user.id!);
+
+
+ 
+  const auctions = getTableAuctionsV2withUser(searchParams, "27");
+
+ 
   return (
     <div className="flex flex-row">
       <div className="container mx-auto mt-12 h-full w-88">
@@ -90,10 +98,10 @@ async function NavMenu({ searchParams }: IndexPageProps) {
                             Transaction
                           </TabsTrigger>
                           <TabsTrigger
-                            value="test"
+                            value="auction-list"
                             className="hover:bg-green-500 w-full  inline-block px-4 py-2 font-normal text-xl  text-gray-600 bg-white rounded"
                           >
-                            Test
+                            Auction list
                           </TabsTrigger>
                         </li>
                       </ul>
@@ -143,7 +151,7 @@ async function NavMenu({ searchParams }: IndexPageProps) {
                           </React.Suspense>
                         </Shell>
                       </TabsContent>
-                      <TabsContent value="test">
+                      <TabsContent value="auction-list">
                         <Shell>
                           <React.Suspense
                             fallback={
@@ -154,9 +162,7 @@ async function NavMenu({ searchParams }: IndexPageProps) {
                             }
                           >
                             <div className="overflow-x-auto">
-                              <TransactionTable
-                                transactionPromise={transactions}
-                              />
+                              <AuctionTable auctionPromise={auctions} />
                             </div>
                           </React.Suspense>
                         </Shell>

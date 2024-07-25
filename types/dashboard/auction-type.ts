@@ -19,6 +19,7 @@ export type IAuction = {
   depositPrice: number;
   description: string;
   // product: IProduct;
+  paymentMethod: string;
   title: string;
   bidList: IBidList[];
   biddingPrice?: number;
@@ -45,6 +46,7 @@ export type IAuctionV2 = {
   depositPrice: number;
   description: string;
   // product: IProduct;
+  paymentMethod: string;
   title: string;
   bidList: IBidList[];
   biddingPrice?: number;

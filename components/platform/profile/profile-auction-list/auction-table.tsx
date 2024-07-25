@@ -29,9 +29,7 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
   // console.log(data)
   const { data: session } = useSession();
 
-  const isAdmin =
-    session?.user.roleName?.toUpperCase() === "ADMIN" ||
-    session?.user.roleName?.toUpperCase() === "MANAGER";
+
 
     const evaluateAuction: IAuction[] = data.filter((item) => Number(item.status) === 1 )
   
@@ -43,7 +41,7 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
         startTransition,
         router,
         onOpen,
-        isAdmin
+
       ),
     [isPending, router, onOpen]
   );
@@ -55,17 +53,9 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
     searchableColumns,
     filterableColumns,
   });
-  const { dataTable: dataTable2 } = useDataTable({
-    data: evaluateAuction,
-    columns,
-    pageCount,
-    searchableColumns,
-    filterableColumns,
-  });
 
   return (
     <div className="space-y-4 overflow-hidden">
-      {isAdmin ? (
         <DataTable
           dataTable={dataTable}
           columns={columns}
@@ -74,16 +64,8 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
           //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
           //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
         />
-      ) : (
-        <DataTable
-          dataTable={dataTable2}
-          columns={columns}
-          searchableColumns={searchableColumns}
-          filterableColumns={filterableColumns}
-          //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
-          //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
-        />
-      )}
+      
+      
     </div>
   );
 }

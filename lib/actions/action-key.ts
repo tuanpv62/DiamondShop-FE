@@ -12,7 +12,12 @@ export const AUCTION_URLS = {
   GET_AUCTIONS_DEFAULT_STATUS: (status: string) =>
     `/auctions/list?page=1&per_page=8&status=${status}`,
   UPDATE_AUCTIONS: (id: string | number) => `/auctions/update-auction/${id}`,
+  UPDATE_AUCTIONS_SET_WAITING: (id: string | number) =>
+    `/auctions/set-waiting/${id}`,
+  UPDATE_AUCTIONS_SET_APPROVE: (id: string | number) =>
+    `/auctions/set-approve/${id}`,
   CREATE_AUCTIONS: "/auctions/create",
+
   REGISTER_ATTEND_AUCTIONS: (auctionId: string) =>
     `/auctions/register-by-auctionId/${auctionId}`,
 };

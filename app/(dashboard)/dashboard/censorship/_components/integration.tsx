@@ -6,6 +6,7 @@ import {
   updateStatusAcceptAuction,
   updateStatusRejectAuction,
 } from "@/lib/actions";
+import { updateStatusAcceptAuctionv2 } from "@/lib/v2/actions-v2/auction-v2";
 import { IAuction } from "@/types/dashboard";
 import Image from "next/image";
 import React, { startTransition } from "react";
@@ -19,7 +20,9 @@ const Integration = ({ auctionPromise }: IntegrationProps) => {
   const { data } = React.use(auctionPromise);
 
   // filter with PENDING STATUS
-const auctionFilter = data.filter((auction: IAuction) => Number(auction.status) === 0)
+  const auctionFilter = data.filter(
+    (auction: IAuction) => Number(auction.status) === 0
+  );
 
   const { onOpen } = useModal();
 
@@ -58,6 +61,13 @@ const auctionFilter = data.filter((auction: IAuction) => Number(auction.status) 
             <div className="">
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
                 Giá khởi điểm : {auction.startPrice}
+                {/* <div className="relative rounded-lg w-64 overflow-hidden  before:absolute before:w-12 before:h-12 before:content[''] before:right-0 before:bg-violet-500 before:rounded-full before:blur-lg  after:absolute after:-z-10 after:w-20 after:h-20 after:content['']  after:bg-rose-300 after:right-12 after:top-3 after:rounded-full after:blur-lg">
+                  <input
+                    placeholder={`${auction.startPrice}`}
+                    className="relative bg-transparent ring-0 outline-none border border-neutral-500 text-white placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 placeholder-opacity-60 focus:border-violet-500 block w-full p-2.5 checked:bg-emerald-500"
+                    type="text"
+                  />
+                </div> */}
               </p>
               {/* <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
             Ngày bắt đầu: {auction.startPrice}
@@ -72,7 +82,7 @@ const auctionFilter = data.filter((auction: IAuction) => Number(auction.status) 
                 onClick={() => {
                   startTransition(() => {
                     toast.promise(
-                      updateStatusAcceptAuction({
+                      updateStatusAcceptAuctionv2({
                         id: auction.auctionId,
                         approved: true,
                       }),
