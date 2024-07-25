@@ -5,6 +5,7 @@ import { EstimateProductModal } from "@/components/modal/estimate-product";
 import { ViewEvaluateModal } from "@/components/modal/evaluate-auciton-modal";
 import { FeedBackModal } from "@/components/modal/feedback-modal";
 import { OrderSheet } from "@/components/modal/order-sheet-modal";
+import { ViewReEvaluateModal } from "@/components/modal/re-evaluate-auciton-modal";
 import { RegiterAuctionModal } from "@/components/modal/register-auction-modal";
 import { ViewConfirmModal } from "@/components/modal/view-auction-confirm-modal";
 import { ViewOrderModal } from "@/components/modal/view-order-modal";
@@ -20,15 +21,18 @@ export const ModalProvider = () => {
 
   if (!isMounted) return null;
 
-  return <>
-    <RegiterAuctionModal/>
-    <WalletModal/>
-    <OrderSheet/>
-    <ConfirmOrderModal/>
-    <ViewOrderModal/>
-    <ViewConfirmModal/>
-    <FeedBackModal/>
-    <EstimateProductModal/>
-    <ViewEvaluateModal/>
-  </>;
+  return (
+    <>
+      <RegiterAuctionModal />
+      <WalletModal />
+      <OrderSheet />
+      <ConfirmOrderModal />
+      <ViewOrderModal />
+      <ViewConfirmModal />
+      <FeedBackModal />
+      <EstimateProductModal />
+      <ViewEvaluateModal />
+      <ViewReEvaluateModal />
+    </>
+  );
 };
