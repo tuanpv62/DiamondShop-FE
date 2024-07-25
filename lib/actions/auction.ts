@@ -111,7 +111,7 @@ export async function updateReEvaluate({ id, values }: any) {
   try {
     console.log("tuan", values);
     const res = await axiosAuth.put(
-      AUCTION_URLS.UPDATE_AUCTIONS_SET_APPROVE(id),
+      AUCTION_URLS.UPDATE_AUCTIONS_USER_DEAL(id),
       {
         values,
       }
@@ -132,13 +132,60 @@ export async function deleteAuction(params: string) {
     console.log("Fail to delete: ", error);
   }
 }
-export async function setApproveAuction(params: string) {
-  try {
-    await axiosAuth.put(AUCTION_URLS.UPDATE_AUCTIONS_SET_APPROVE(params));
 
-    revalidatePath("/");
+export async function setApproveAuction({ id, values }: any) {
+  // t thấy m ko có values pass qua check đi  ????
+  console.log(values);
+  try {
+    const res = await axiosAuth.put(
+      AUCTION_URLS.UPDATE_AUCTIONS_SET_APPROVE(id),
+      {
+        responsibleBy: values,
+      }
+    );
+
+    revalidatePath("/dashboard/auctions");
   } catch (error) {
-    console.log("Fail to delete: ", error);
+    console.log("FALI to dinh gia");
+  }
+}
+export async function setConfirmAuction({ id, title, startDate }: any) {
+  console.log("kiki", id);
+
+  try {
+    const res = await axiosAuth.put(
+      AUCTION_URLS.UPDATE_AUCTIONS_SET_CONFIRM(id),
+      {
+        startDate: startDate,
+        title: title,
+      }
+    );
+    if (res.status === 200 && res.data.isError === false) {
+      console.log("Auction confirmed successfully:", res.data.message);
+      revalidatePath("/dashboard/confirm");
+      return res.data;
+    } else {
+      throw new Error(res.data.message || "Unexpected response from server");
+    }
+
+    // revalidatePath("/dashboard/confirm");
+  } catch (error) {
+    console.log("FAIL to xac nhan");
+
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+      console.error("Response headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No response received:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error setting up request:", error.message);
+    }
+    throw error; // Re-throw the error so it can be handled by the caller
   }
 }
 

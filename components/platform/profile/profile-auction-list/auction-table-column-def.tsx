@@ -38,6 +38,7 @@ import { toast } from "sonner";
 import {
   deleteAuction,
   setApproveAuction,
+  setConfirmAuction,
   updateReEvaluate,
   updateStatusAcceptAuction,
   updateStatusAuction,
@@ -381,11 +382,14 @@ export function fetchAutionsTableColumnDefs(
                     //   onOpen("rejectAuction", { auction: row.original })
 
                     // }
+
                     onClick={() => {
                       startTransition(() => {
                         row.toggleSelected(false);
                         toast.promise(
-                          setApproveAuction(row.original.auctionId.toString()),
+                          setConfirmAuction({
+                            id: row.original.auctionId.toString(),
+                          }),
                           {
                             loading: "Update...",
                             success: () => "Auction approve successfully.",
