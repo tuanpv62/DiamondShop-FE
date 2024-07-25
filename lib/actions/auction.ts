@@ -156,8 +156,8 @@ export async function setConfirmAuction({ id, title, startDate }: any) {
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_SET_CONFIRM(id),
       {
-        startDate: startDate,
-        title: title,
+        startDate: "2024-07-25T15:53:59.894Z",
+        title: "admin",
       }
     );
     if (res.status === 200 && res.data.isError === false) {

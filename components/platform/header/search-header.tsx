@@ -21,7 +21,7 @@ export const ServerSearch = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/v1/auction/list?page=1&per_page=100&status=LIVE.COMING&search=${encodeURIComponent(
+          `https://diamondshopapi.azurewebsites.net/api/v1/auction/list?page=1&per_page=100&status=LIVE.COMING&search=${encodeURIComponent(
             searchQuery
           )}`
         );
