@@ -18,7 +18,12 @@ import { OrderTable } from "./profile-order/order-table";
 import { auth } from "@/lib/auth";
 import { getTransactionByUserId } from "@/lib/actions/transaction";
 import { TransactionTable } from "./profile-transaction/transaction-table";
-import { getAuctionByUserIdV2, getTableAuctionsV2withUser } from "@/lib/v2/actions-v2/auction-v2";
+import {
+  getAuctionByUserIdV2,
+  getTableAuctionsV2withUser,
+  getTableOrderV2withUser,
+  getTableTramsactionsV2withUser,
+} from "@/lib/v2/actions-v2/auction-v2";
 import { AuctionTable } from "./profile-auction-list/auction-table";
 
 export interface IndexPageProps {
@@ -26,14 +31,16 @@ export interface IndexPageProps {
 }
 async function NavMenu({ searchParams }: IndexPageProps) {
   const session = await auth();
-  const orders = getOrdersByUserId(searchParams, session?.user.id!);
-  const transactions = getTransactionByUserId(searchParams, session?.user.id!);
+  // const orders = getOrdersByUserId(searchParams, session?.user.id!);
+  const orders = getTableOrderV2withUser(searchParams);
 
+  const transactions = getTableTramsactionsV2withUser(searchParams);
 
- 
-  const auctions = getTableAuctionsV2withUser(searchParams, session?.user.userId!);
+  const auctions = getTableAuctionsV2withUser(
+    searchParams,
+    session?.user.userId!
+  );
 
- 
   return (
     <div className="flex flex-row">
       <div className="container mx-auto mt-12 h-full w-88">
@@ -53,7 +60,7 @@ async function NavMenu({ searchParams }: IndexPageProps) {
                             DashBoard
                           </TabsTrigger>
                         </li>
-                        <li>
+                        {/* <li>
                           <Accordion
                             type="single"
                             collapsible
@@ -81,7 +88,7 @@ async function NavMenu({ searchParams }: IndexPageProps) {
                               </AccordionContent>
                             </AccordionItem>
                           </Accordion>
-                        </li>
+                        </li> */}
                         <li>
                           <TabsTrigger
                             value="orders"

@@ -7,6 +7,7 @@ export type IOrder = {
   address: string;
   auctionTitle: string;
   expiredAt: Date;
+  isExpired: boolean;
   productName: string;
   productCode: string;
   auctionName: string;
@@ -19,4 +20,3 @@ export type IOrder = {
   updated_at: Date;
   confirmed: boolean;
 };
-  

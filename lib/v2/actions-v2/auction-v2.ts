@@ -10,7 +10,13 @@ import {
   fetchListData,
   fetchSingleData,
 } from "../generics-v2";
-import { IAuction, IAuctionCreateField, IAuctionV2 } from "@/types/dashboard";
+import {
+  IAuction,
+  IAuctionCreateField,
+  IAuctionV2,
+  IOrder,
+  ITransaction,
+} from "@/types/dashboard";
 import { axiosAuth } from "@/lib/api-interceptor/api";
 import { IProductCreateV2 } from "./product-v2";
 
@@ -57,7 +63,9 @@ export async function createAuctionV2(data: IProductCreateV2): Promise<void> {
     throw error;
   }
 }
-export async function createAuctionV3(data: IAuctionCreateField): Promise<void> {
+export async function createAuctionV3(
+  data: IAuctionCreateField
+): Promise<void> {
   noStore();
 
   try {
@@ -104,7 +112,6 @@ export async function updateAuctionDetailV2(
   }
 }
 
-
 export async function getAuctionByUserIdV2(
   searchParams: SearchParams,
   userId: string
@@ -115,10 +122,9 @@ export async function getAuctionByUserIdV2(
   return await fetchListData(url, searchParams);
 }
 
-
 export async function getTableAuctionsV2withUser(
   searchParams: SearchParams,
-  userId: string,
+  userId: string
 ): Promise<ApiListResponse<IAuction>> {
   noStore();
 
@@ -126,4 +132,18 @@ export async function getTableAuctionsV2withUser(
     AUCTION_URLS_V2.GET_AUCTION_BY_USERID(userId),
     searchParams
   );
+}
+export async function getTableTramsactionsV2withUser(
+  searchParams: SearchParams
+): Promise<ApiListResponse<ITransaction>> {
+  noStore();
+
+  return await fetchListData(AUCTION_URLS_V2.GET_TRANSACTIONS, searchParams);
+}
+export async function getTableOrderV2withUser(
+  searchParams: SearchParams
+): Promise<ApiListResponse<IOrder>> {
+  noStore();
+
+  return await fetchListData(AUCTION_URLS_V2.GET_ORDERS, searchParams);
 }

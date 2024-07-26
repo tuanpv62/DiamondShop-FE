@@ -14,14 +14,13 @@ import {
 import { useRouter } from "next/navigation";
 import { getTransactionByUserId, getTransactions } from "@/lib/actions/transaction";
 import { IOrder, ITransaction } from "@/types/dashboard";
-import { getOrders } from "@/lib/actions";
 
 interface OrdersTableProps {
   transactionPromise: ReturnType<typeof getTransactionByUserId>;
 }
 
 export function TransactionTable({ transactionPromise }: OrdersTableProps) {
-  const { data, pageCount } = React.use(transactionPromise);
+  const { data, pageCount  } = React.use(transactionPromise);
   const [isPending, startTransition] = React.useTransition();
   // console.log(data)
   const router = useRouter();

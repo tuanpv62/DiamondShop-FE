@@ -1,5 +1,5 @@
 export type ITransaction = {
-  id: number;
+  transactionId: number;
   resource: string;
   amount: number;
   paymentMethod: string;

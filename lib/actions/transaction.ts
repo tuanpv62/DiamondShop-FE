@@ -10,7 +10,7 @@ export async function getTransactions(
   searchParams: SearchParams
 ): Promise<ApiListResponse<ITransaction>> {
   noStore();
-  const url = `/transactions`;
+  const url = `/transaction/get-all`;
 
   revalidatePath("/");
   return await fetchListData(url, searchParams);
@@ -21,7 +21,8 @@ export async function getTransactionByUserId(
   userId: string
 ): Promise<ApiListResponse<ITransaction>> {
   noStore();
-  const url = `/transactions?userId=${userId}`;
+  // const url = `/transactions?userId=${userId}`;
+  const url = `/transaction/get-by-account`;
 
   return await fetchListData(url, searchParams);
 }

@@ -19,9 +19,10 @@ import {
   IUser,
   IWallet,
 } from "@/types/dashboard";
-import { getAuctions, getAuctionsWithStatus } from  "@/lib/actions";
+import { getAuctions, getAuctionsWithStatus } from "@/lib/actions";
 import { getWalletByUserId } from "@/lib/actions";
-import { ApiListResponse, ApiSingleResponse, } from "@/lib/generics";
+import { ApiListResponse, ApiSingleResponse } from "@/lib/generics";
+import { Cog } from "lucide-react";
 
 // USER
 export const useGetStaff = (searchTerm: SearchParams) => {
@@ -80,10 +81,10 @@ export const useGetWallet = (params: string) => {
 //ORDER
 export const useGetOrderByUserId = (
   searchTerm: SearchParams,
-  userId: string
+  userID: string
 ) => {
   return useQuery<ApiListResponse<IOrder>>({
-    queryKey: [QUERY_KEYS.GET_ORDERS, searchTerm, userId],
-    queryFn: () => getOrdersByUserId(searchTerm, userId),
+    queryKey: [QUERY_KEYS.GET_ORDERS, searchTerm, userID],
+    queryFn: () => getOrdersByUserId(searchTerm, userID),
   });
 };

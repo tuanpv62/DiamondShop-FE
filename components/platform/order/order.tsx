@@ -52,80 +52,12 @@ function BodyOrder({ orderPromisse }: BodyOrderProps) {
     setSelectedMethod(method);
   };
 
-  const handleUpdateOrder = async () => {
-    try {
-      const orderId = orderData?.id;
-      const payload = {
-        paymentMethod: selectedMethod,
-        note: "string",
-        userIn4Id: selectedAddress,
-      };
-      setIsWaiting(selectedMethod === "BANK"); // Đặt trạng thái "waiting" nếu chọn BANK
-      // Chuyển đổi payload thành JSON
-      // const payloadJSON = JSON.stringify(payload);
-      // console.log("Payload JSON:", payloadJSON);
-
-      const response = await axios.put(
-        `https://orchid.fams.io.vn/api/v1/orders/update-order/${orderId}`,
-        payload
-      );
-
-      console.log(response);
-      console.log(response.data.status);
-      console.log(response.data.payload);
-
-      if (
-        selectedMethod === "CARD" &&
-        response.data.payload.status === "CONFIRMED"
-      ) {
-        setIsPaymentSuccessful(true);
-      } else if (
-        selectedMethod === "BANK" &&
-        response.data.status === "SUCCESS"
-      ) {
-        // Mở trang thanh toán VNPay
-        router.push(response.data.payload);
-
-        // Lắng nghe sự kiện thanh toán thành công hoặc thất bại từ trang thanh toán VNPay
-        window.addEventListener("message", (event) => {
-          console.log(event.data);
-
-          if (event.data === "SUCCESS") {
-            // Thanh toán thành công, redirect đến trang "test-success"
-            router.push("/test-success");
-          } else if (event.data === "failed") {
-            // Thanh toán thất bại, redirect đến trang "test-failed"
-            router.push("/test-failed");
-          }
-        });
-      } else if (
-        (selectedMethod === "CARD" && response.data.status === "CONFIRMED") ||
-        (selectedMethod === "BANK" && response.data.status === "CONFIRMED")
-      ) {
-        setOrderConfirmed(true);
-      } else {
-        setIsPaymentSuccessful(false);
-        setShowModal(true); // Mở modal
-      }
-
-      // Kiểm tra nếu đơn hàng đã được xác nhận
-
-      setShowModal(true); // Mở modal
-    } catch (error) {
-      console.error(error);
-      setIsPaymentSuccessful(false); // Đặt trạng thái thất bại
-      setShowModal(true); // Mở modal
-    }
-  };
-
   const handleCloseModal = () => {
     setShowModal(false);
     router.push("/");
   };
 
-
   // Hiển thị thông tin của order đó thôi Và bấm cái nút call api POST của /payment/pay-order-with-wallet
-
 
   return (
     <div className="container mx-auto py-8">
@@ -267,7 +199,8 @@ function BodyOrder({ orderPromisse }: BodyOrderProps) {
               </div>
               <Button
                 className="bg-slate-400 hover:bg-green-800 w-full"
-                onClick={handleUpdateOrder}
+                // check lại
+                // onClick={handleUpdateOrder}
               >
                 Proceed to payment
               </Button>

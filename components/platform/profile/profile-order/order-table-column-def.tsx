@@ -12,7 +12,6 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-
 import { MdOutlinePending } from "react-icons/md";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { FcCancel } from "react-icons/fc";
@@ -52,11 +51,13 @@ export function fetchOrderTableColumnDefs(
       enableHiding: false,
     },
     {
-      accessorKey: "id",
+      accessorKey: "OrderId",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="OrderId" />
       ),
-      cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+      cell: ({ row }) => (
+        <div className="w-[80px]">{row.getValue("OrderId")}</div>
+      ),
       enableSorting: false,
       enableHiding: false,
     },
@@ -75,21 +76,6 @@ export function fetchOrderTableColumnDefs(
         );
       },
     },
-    // {
-    //   accessorKey: "address",
-    //   header: ({ column }) => (
-    //     <DataTableColumnHeader column={column} title="address" />
-    //   ),
-    //   cell: ({ row }) => {
-    //     return (
-    //       <div className="flex space-x-2">
-    //         <span className="max-w-[500px] truncate font-medium">
-    //           {row.getValue("address")}
-    //         </span>
-    //       </div>
-    //     );
-    //   },
-    // },
     {
       accessorKey: "productName",
       header: ({ column }) => (
@@ -100,7 +86,6 @@ export function fetchOrderTableColumnDefs(
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
               {row.getValue("productName")}
-               
             </span>
           </div>
         );
@@ -116,7 +101,6 @@ export function fetchOrderTableColumnDefs(
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
               {row.getValue("productCode")}
-               
             </span>
           </div>
         );
@@ -132,7 +116,6 @@ export function fetchOrderTableColumnDefs(
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
               {row.getValue("total")}
-               
             </span>
           </div>
         );
@@ -148,7 +131,6 @@ export function fetchOrderTableColumnDefs(
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
               {row.getValue("quantity")}
-               
             </span>
           </div>
         );
@@ -209,7 +191,7 @@ export function fetchOrderTableColumnDefs(
         let statusText;
         let statusIcon;
         let statusColor;
-        if (status === "PENDING") {
+        if (status === 1) {
           statusText = "PENDING";
           statusIcon = (
             <MdOutlinePending
@@ -218,7 +200,7 @@ export function fetchOrderTableColumnDefs(
             />
           );
           statusColor = "text-yellow-500";
-        } else if (status === "CONFIRMED") {
+        } else if (status === 2) {
           statusText = "CONFIRMED";
           statusColor = "text-green-500";
           statusIcon = (
@@ -227,7 +209,7 @@ export function fetchOrderTableColumnDefs(
               aria-hidden="true"
             />
           );
-        } else if (status === "FAILED") {
+        } else if (status === 3) {
           statusText = "REJECT";
           statusIcon = (
             <FcCancel
