@@ -34,13 +34,6 @@ export const ViewEvaluateModal = () => {
   const { data: session } = useSession();
   const isOpenModal = isOpen && type === "evaluateModal";
 
-  //   {
-  //   "valuation": 0.01,
-  //   "duration": 0,
-  //   "depositPrice": 0.01,
-  //   "startPrice": 0.01,
-  //   "biddingPrice": 0.01,
-  // }
 
   const EvaluateSchema = z.object({
     valuation: z.coerce.number(),
@@ -48,6 +41,8 @@ export const ViewEvaluateModal = () => {
     depositPrice: z.coerce.number().min(10000, {message: "giá deposit nên lớn hơn 10000Đ"}),
     startPrice: z.coerce.number(),
   });
+
+  
   const form = useForm<z.infer<typeof EvaluateSchema>>({
     resolver: zodResolver(EvaluateSchema),
     defaultValues: {

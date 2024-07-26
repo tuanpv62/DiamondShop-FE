@@ -25,11 +25,13 @@ export const OrderSheet = () => {
   const { data: session } = useSession();
   const isOpenModal = isOpen && type === "orderSheetModal";
   const searchParams = { page: "1", per_page: "100", status: "PENDING" }; //TODO: add status
+ 
   const { data: orders, isLoading } = useGetOrderByUserId(
     searchParams,
     session?.user.id || ''
   );
 
+  //     => lấy cái expiredAt (DATE)  để filter ra các order hết hạn hoặc ko
   const getDataOrderList = () => {
     return orders?.data.filter((order) => order.expiredAt);
   };
@@ -40,6 +42,9 @@ export const OrderSheet = () => {
   const firstExpiredAt: string | undefined = expiredAtList?.[0]?.toString(); // Lấy thời gian đầu tiên dưới dạng chuỗi
 
   const countdown = useCountdownTimer(firstExpiredAt); // Truyền chuỗi thời gian đầu tiên vào useCountdownTimer
+//
+
+  //isExpired   =>   yes or no => lấy các order mà isExpried false
 
   return (
     <Sheet open={isOpenModal} onOpenChange={onClose}>
