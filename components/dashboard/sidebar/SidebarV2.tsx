@@ -103,16 +103,7 @@ const isAdmin = session?.user.roleName?.toUpperCase() === "ADMIN";
                           Create auction
                         </Link>
                       </li>
-                      {isAdmin && (
-                        <li>
-                          <Link
-                            href="/dashboard/censorship"
-                            className="text-md inline-block py-1.5 font-medium text-bgray-600 hover:text-bgray-800"
-                          >
-                            Censorship auctions
-                          </Link>
-                        </li>
-                      )}
+                     
                     </ul>
                   </li>
                 </ul>

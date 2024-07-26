@@ -30,7 +30,6 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
   const { data: session } = useSession();
 
 
-
     const evaluateAuction: IAuction[] = data.filter((item) => Number(item.status) === 1 )
   
 
@@ -47,7 +46,7 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
   );
 
   const { dataTable } = useDataTable({
-    data: data.sort(),
+    data: data.sort((a,b) => b.auctionId - a.auctionId ) ,
     columns,
     pageCount,
     searchableColumns,

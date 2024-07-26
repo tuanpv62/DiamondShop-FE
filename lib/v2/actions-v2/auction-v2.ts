@@ -21,10 +21,17 @@ export async function getAuctionsWithStatusV2(
 
   return await fetchListData(AUCTION_URLS_V2.GET_AUCTIONS);
 }
+export async function getAuctionsFilterWithStatus(
+  status: string
+): Promise<ApiListResponse<any>> {
+  noStore();
+
+  return await fetchListData(AUCTION_URLS_V2.GET_AUCTIONS_WITH_STATUS(status));
+}
 
 export async function getAuctionByIDV2(
   params: string
-): Promise<ApiSingleResponse<IAuctionV2>> {
+): Promise<ApiSingleResponse<IAuction>> {
   noStore();
 
   return await fetchSingleData(AUCTION_URLS_V2.GET_AUCTION_BY_ID(params));

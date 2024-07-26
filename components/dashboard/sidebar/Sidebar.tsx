@@ -191,16 +191,7 @@ function Sidebar({ handleActive }: any) {
                       Tạo Mới Đấu Giá
                     </Link>
                   </li> */}
-                  {isAdmin && (
-                    <li>
-                      <Link
-                        href="/dashboard/censorship"
-                        className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
-                      >
-                        Kiểm Duyệt Sản Phẩm
-                      </Link>
-                    </li>
-                  )}
+          
                   {isAdmin && (
                     <li>
                       <Link

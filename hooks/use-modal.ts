@@ -15,7 +15,7 @@ export type ModalType =
   | "reEvaluateModal";
 
 export interface ModalData {
-  auction?: IAuctionV2;
+  auction?: IAuction;
   order?: IOrder;
 }
 

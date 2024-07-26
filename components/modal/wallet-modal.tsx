@@ -17,7 +17,7 @@ import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
-import { addMoneyToWallet } from "@/lib/actions";
+import { addMoneyToWallet, addMoneyToWalletV2 } from "@/lib/actions";
 import { Icons } from "../icons";
 import { cn, formatter } from "@/lib/utils";
 import { z } from "zod";
@@ -73,12 +73,13 @@ export const WalletModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: session } = useSession();
-  const userId = session?.user.id;
+  const userId = session?.user.userId;
 
   const { isOpen, onClose, type } = useModal();
   const isOpenModal = isOpen && type === "walletModal";
 
   const { data: wallet, isLoading: walletLoading } = useGetWallet(userId!);
+
 
   const WalletSchema = z.object({
     price: z.coerce.number().min(10000, "Vui lòng nhập mệnh giá 10000 trở lên"),
@@ -112,7 +113,7 @@ export const WalletModal = () => {
     console.log(price)
 
     try {
-      const paymentUrl = await addMoneyToWallet(userId!, price);
+      const paymentUrl = await addMoneyToWalletV2(userId!, price);
 
       console.log(paymentUrl);
 
@@ -269,6 +270,8 @@ export const WalletModal = () => {
     default:
       break;
   }
+
+
 
   return (
     <>

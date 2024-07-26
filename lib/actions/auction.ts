@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import { axiosAuth } from "@/lib/api-interceptor/api";
 import { AUCTION_URLS, FEEDBACK_URLS } from "./action-key";
+import { AUCTION_URLS_V2 } from "../v2/actions-v2/action-key-v2";
 
 export async function getAuctions(): Promise<ApiListResponse<IAuction>> {
   noStore();
@@ -94,12 +95,9 @@ export async function updateStatusRejectAuction({
 
 export async function updateEvaluate({ id, values }: any) {
   try {
-    console.log("vinh", values);
     const res = await axiosAuth.put(
-      AUCTION_URLS.UPDATE_AUCTIONS_SET_WAITING(id),
-      {
-        values,
-      }
+      AUCTION_URLS_V2.UPDATE_AUCTIONS_EVALUATE(id),
+      values
     );
 
     revalidatePath("/dashboard/auctions");
@@ -113,7 +111,10 @@ export async function updateReEvaluate({ id, values }: any) {
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_USER_DEAL(id),
       {
-        values,
+        valuation: values.valuation,
+        duration: values.duration,
+        depositPrice: values.depositPrice,
+        startPrice: values.startPrice,
       }
     );
 
@@ -149,13 +150,11 @@ export async function setApproveAuction({ id, values }: any) {
   }
 }
 export async function setCommingAuction({ id }: any) {
- 
   try {
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_SET_COMMING(id)
     );
 
- 
     if (res.status === 200 && res.data.isError === false) {
       console.log("Auction comming successfully:", res.data.message);
       revalidatePath("/");
@@ -184,12 +183,48 @@ export async function setCommingAuction({ id }: any) {
     throw error; // Re-throw the error so it can be handled by the caller
   }
 }
+
+export async function setWaitingAuction({ id }: any) {
+  try {
+    const res = await axiosAuth.put(
+      AUCTION_URLS.UPDATE_AUCTIONS_SET_WAITING(id)
+    );
+
+    if (res.status === 200 && res.data.isError === false) {
+      console.log("Auction comming successfully:", res.data.message);
+      revalidatePath("/");
+      return res.data;
+    } else {
+      throw new Error(res.data.message || "Unexpected response from server");
+    }
+
+    // revalidatePath("/dashboard/confirm");
+  } catch (error: any) {
+    console.log("FAIL to comming");
+
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+      console.error("Response headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No response received:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error setting up request:", error.message);
+    }
+    throw error; // Re-throw the error so it can be handled by the caller
+  }
+}
+
 export async function setConfirmAuction({ id, title, startDate }: any) {
   try {
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_SET_CONFIRM(id),
       {
-        startDate: "2024-07-25T15:53:59.894Z",
+        startDate: "2024-07-29T15:53:59.894Z",
         title: "admin",
       }
     );

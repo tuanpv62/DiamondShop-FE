@@ -49,11 +49,15 @@ export default function ListingDetails({ auction }: ListingDetailsProps) {
     },
   });
 
-  const isRegisterAuction = auction?.bidList?.some(
-    (item) => item.userID.toString() === session?.user.id
-  );
-  const isStatusComing = auction?.status === "COMING";
-  const isStatusLive = auction?.status === "LIVE";
+  // const isRegisterAuction = auction?.bidList?.some(
+  //   (item) => item.userId.toString() === session?.user.id
+  // );
+
+  const isRegisterAuction = auction?.createdBy === session?.user.userId;
+
+  const isStatusComing = auction?.status.toString() === "5";
+
+  const isStatusLive = auction?.status.toString() === "6";
   const canBid = isRegisterAuction && isStatusLive;
 
   // need to optimize

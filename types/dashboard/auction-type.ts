@@ -3,10 +3,16 @@ export type IBidList = {
   ratings: number;
   biddingPrice: number;
   isTop1: boolean;
-  userID: number;
+  userId: number;
   auctionID: number;
   userName: string;
 };
+
+
+export type IProductImages = {
+  id: string,
+  image_url: string
+}
 
 export type IAuction = {
   auctionId: number;
@@ -23,11 +29,13 @@ export type IAuction = {
   title: string;
   bidList: IBidList[];
   biddingPrice?: number;
-  image_url: string;
+  productImages: IProductImages[]
+  image_url: string;    
   quantity: number;
   modifiedBy: string;
   created_at: Date;
   updated_at: Date;
+  createdBy: string;
   remindAt: Date;
   endDate?: Date;
   startDate?: Date;
