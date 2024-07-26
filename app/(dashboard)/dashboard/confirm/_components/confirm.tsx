@@ -31,7 +31,7 @@ const Confirm = ({ auctionPromise }: ConfirmProps) => {
     <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-6">
       {auctionFilter.length === 0 ? (
         <p className="text-gray-600 dark:text-gray-400 text-lg">
-          Hiện không có sản phẩm nào cần định giá
+          Hiện không có sản phẩm nào cần xác nhận
         </p>
       ) : (
         auctionFilter.map((auction) => (

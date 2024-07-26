@@ -52,10 +52,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const router = useRouter();
   const login = async (email: string, password: string) => {
-
     try {
       const response = await fetch(
-        "https://orchid.fams.io.vn/api/v1/auth/login",
+       
+        "https://diamondshopapi.azurewebsites.net/api/v1/auth/login",
+        // "http://localhost:5141/api/v1/auth/login",
         {
           method: "POST",
           headers: {

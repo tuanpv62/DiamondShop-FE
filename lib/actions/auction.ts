@@ -134,7 +134,6 @@ export async function deleteAuction(params: string) {
 }
 
 export async function setApproveAuction({ id, values }: any) {
-  // t thấy m ko có values pass qua check đi  ????
   console.log(values);
   try {
     const res = await axiosAuth.put(
@@ -149,9 +148,42 @@ export async function setApproveAuction({ id, values }: any) {
     console.log("FALI to dinh gia");
   }
 }
-export async function setConfirmAuction({ id, title, startDate }: any) {
- 
+export async function setCommingAuction({ id }: any) {
+  try {
+    const res = await axiosAuth.put(
+      AUCTION_URLS.UPDATE_AUCTIONS_SET_CONFIRM(id)
+    );
 
+    console.log("vintest", res);
+    if (res.status === 200 && res.data.isError === false) {
+      console.log("Auction comming successfully:", res.data.message);
+      revalidatePath("/");
+      return res.data;
+    } else {
+      throw new Error(res.data.message || "Unexpected response from server");
+    }
+
+    // revalidatePath("/dashboard/confirm");
+  } catch (error: any) {
+    console.log("FAIL to comming");
+
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+      console.error("Response headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No response received:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error setting up request:", error.message);
+    }
+    throw error; // Re-throw the error so it can be handled by the caller
+  }
+}
+export async function setConfirmAuction({ id, title, startDate }: any) {
   try {
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_SET_CONFIRM(id),
@@ -161,7 +193,7 @@ export async function setConfirmAuction({ id, title, startDate }: any) {
       }
     );
 
-    console.log("vintest", res)
+    console.log("vintest", res);
     if (res.status === 200 && res.data.isError === false) {
       console.log("Auction confirmed successfully:", res.data.message);
       revalidatePath("/dashboard/confirm");

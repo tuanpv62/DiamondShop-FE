@@ -13,13 +13,12 @@ import ReviewBlock from "./_components/review";
 import { getAuctionByIDV2 } from "@/lib/v2/actions-v2/auction-v2";
 
 const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
-  
   const auction = await getAuctionByIDV2(params.auctionId);
   const feedback = getFeedBackAuction(params.auctionId);
   const isLive = auction.data?.status === "1";
 
-  // loading => client 
-  // wating 
+  // loading => client
+  // wating
   return (
     <>
       <BreadCrumb
@@ -32,10 +31,11 @@ const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
       <div className="container mx-auto px-4 md:px-12 mt-10 mb-4 flex flex-col lg:flex-row">
         <LeftSideAuction productId={auction.data?.productID!} />
 
-
         <div className="w-full lg:w-3/5 md:pl-4">
           {isLive ? (
-            <ListingDetailsRealTime auctionId={auction.data?.id.toString()!} />
+            <ListingDetailsRealTime
+              auctionId={auction.data?.auctionId.toString()!}
+            />
           ) : (
             <ListingDetails auction={auction.data} />
           )}
@@ -66,9 +66,9 @@ const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
               </TabsContent>
               <TabsContent value="bidding" className="overflow-y-auto ">
                 {isLive ? (
-                  <Bidding auctionId={auction.data?.id.toString()!} />
+                  <Bidding auctionId={auction.data?.auctionId.toString()!} />
                 ) : (
-                  <BiddingHistory auction={auction.data!} />
+                  <BiddingHistory auction={auction.data!} bids={[]} />
                 )}
               </TabsContent>
             </Tabs>
@@ -78,9 +78,7 @@ const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
 
       <div className="container mx-auto px-4 md:px-12">
         <React.Suspense fallback={<div>...Loading</div>}>
-          <ReviewBlock reviewsData={reviewsData} 
-          
-          feedBackPromise={feedback} />
+          <ReviewBlock reviewsData={reviewsData} feedBackPromise={feedback} />
         </React.Suspense>
       </div>
       <div className="container mx-auto px-4 md:px-12">

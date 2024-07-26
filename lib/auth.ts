@@ -40,6 +40,7 @@ export const authOptions = {
         try {
           const res = await fetch(
             "https://diamondshopapi.azurewebsites.net/api/v1/authentications/login",
+            // "http://localhost:5141/api/v1/authentications/login",
             {
               method: "POST",
               headers: {

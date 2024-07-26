@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal";
 import {
   getAuctionsWithStatus,
+  setApproveAuction,
   setConfirmAuction,
   updateStatusAcceptAuction,
   updateStatusRejectAuction,
@@ -13,15 +14,15 @@ import { useRouter } from "next/navigation";
 import React, { startTransition } from "react";
 import { toast } from "sonner";
 
-interface ConfirmProps {
+interface ApproveProps {
   auctionPromise: ReturnType<typeof getAuctionsWithStatus>;
 }
 
-const Confirm = ({ auctionPromise }: ConfirmProps) => {
+const Approve = ({ auctionPromise }: ApproveProps) => {
   const { data } = React.use(auctionPromise);
   // filter with waiting STATUS
   const auctionFilter = data.filter(
-    (auction: IAuction) => Number(auction.status) === 2
+    (auction: IAuction) => Number(auction.status) === 3
   );
 
   const { onOpen } = useModal();
@@ -31,7 +32,7 @@ const Confirm = ({ auctionPromise }: ConfirmProps) => {
     <div className="grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-6">
       {auctionFilter.length === 0 ? (
         <p className="text-gray-600 dark:text-gray-400 text-lg">
-          Hiện không có sản phẩm nào cần định giá
+          Hiện không có sản phẩm nào cần chấp nhận
         </p>
       ) : (
         auctionFilter.map((auction) => (
@@ -76,15 +77,14 @@ const Confirm = ({ auctionPromise }: ConfirmProps) => {
                 onClick={() => {
                   startTransition(() => {
                     toast.promise(
-                      setConfirmAuction({
+                      setApproveAuction({
                         id: auction.auctionId,
-                        startDate: auction.startDate,
-                        title: auction.title,
+                        responsibleBy: auction.modifiedBy,
                       }),
                       {
                         loading: "Đang cập nhật...",
-                        success: (data) =>
-                          `Cập nhật đấu giá thành công: ${data.message}`,
+                        success: (data: any) =>
+                          `Cập nhật đấu giá thành công`,
                         error: (err) => `Lỗi xác nhận: ${err.message}`,
                       }
                     );
@@ -123,4 +123,4 @@ const Confirm = ({ auctionPromise }: ConfirmProps) => {
   );
 };
 
-export default Confirm;
+export default Approve;

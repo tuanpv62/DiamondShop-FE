@@ -221,6 +221,16 @@ function Sidebar({ handleActive }: any) {
                       </Link>
                     </li>
                   )}
+                  {isAdmin && (
+                    <li>
+                      <Link
+                        href="/dashboard/approve"
+                        className="text-md inline-block py-1.5 font-medium text-bgray-600 transition-all hover:text-bgray-800 dark:text-bgray-50 hover:dark:text-success-300"
+                      >
+                        chấp nhận đấu giá sản phẩm
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </li>
 

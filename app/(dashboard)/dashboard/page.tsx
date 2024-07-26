@@ -302,7 +302,7 @@ const DashboardPage = () => {
             <CardHeader>
               <CardTitle>Progress</CardTitle>
               <CardDescription>
-                You're average more steps a day this year than last year.
+                <p>You`re average more steps a day this year than last year.</p>
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
@@ -691,7 +691,7 @@ const DashboardPage = () => {
             <CardHeader className="p-4 pb-0">
               <CardTitle>Active Energy</CardTitle>
               <CardDescription>
-                You're burning an average of 754 calories per day. Good job!
+                You`re burning an average of 754 calories per day. Good job!
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-row items-baseline gap-4 p-4 pt-2">

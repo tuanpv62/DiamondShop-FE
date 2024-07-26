@@ -9,6 +9,7 @@ const AuctionList = () => {
         const response = await axios.get(
           // "http://localhost:5000/api/v1/auctions"
           "https://diamondshopapi.azurewebsites.net/api/v1/auctions"
+          // "http://localhost:5141/api/v1/auctions"
         );
         console.log(response.data.message);
       } catch (error) {

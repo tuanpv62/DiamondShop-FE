@@ -35,23 +35,23 @@ const Bidding = ({ auctionId }: BiddingProps) => {
                 <li
                   key={index}
                   className={`flex items-center bg-white border-2 shadow-md rounded-md p-4 mb-4 space-y-3 ${
-                    bidder.top1 ? "border-2 border-yellow-500" : ""
+                    bidder.isTop1 ? "border-2 border-yellow-500" : ""
                   }`}
                 >
                   <div className="relative">
-                    {bidder.top1 && (
+                    {bidder.isTop1 && (
                       <div className="absolute top-0 left-0 w-8 h-8  text-2xl  flex items-center justify-center text-gray-700 font-bold">
                         👑
                       </div>
                     )}
                     <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-bold mr-4">
-                      {bidder.top1 ? "" : index + 1}
+                      {bidder.isTop1 ? "" : index + 1}
                     </div>
                   </div>
                   <div className="flex-grow flex justify-between">
                     <div className="flex flex-col">
                       <span className="font-semibold">
-                      User Name: {bidder.userName}
+                        User Name: {bidder.userName}
                       </span>
                       <span className="text-gray-600">
                         Ratings: {bidder.ratings}

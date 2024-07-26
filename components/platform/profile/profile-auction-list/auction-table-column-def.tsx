@@ -38,6 +38,7 @@ import { toast } from "sonner";
 import {
   deleteAuction,
   setApproveAuction,
+  setCommingAuction,
   setConfirmAuction,
   updateReEvaluate,
   updateStatusAcceptAuction,
@@ -372,17 +373,41 @@ export function fetchAutionsTableColumnDefs(
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[160px]">
+            {Number(row.original.status) === 4 && (
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Trạng thái</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      startTransition(() => {
+                        row.toggleSelected(false);
+                        toast.promise(
+                          setCommingAuction({
+                            id: row.original.auctionId.toString(),
+                          }),
+                          {
+                            loading: "Update...",
+                            success: () => "Auction comming successfully.",
+                            // error: (err: unknown) => catchError(err),
+                            error: () => "Comming error",
+                          }
+                        );
+                      });
+                    }}
+                  >
+                    <Eye className="mr-2 h-4 w-4" />
+                    Xét lên hàng chờ
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            )}
             {Number(row.original.status) === 2 && (
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>Trạng thái</DropdownMenuSubTrigger>
 
                 <DropdownMenuSubContent>
                   <DropdownMenuItem
-                    // onClick={() =>
-                    //   onOpen("rejectAuction", { auction: row.original })
-
-                    // }
-
                     onClick={() => {
                       startTransition(() => {
                         row.toggleSelected(false);

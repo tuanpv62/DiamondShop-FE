@@ -20,6 +20,8 @@ export const AUCTION_URLS = {
     `/auctions/user-deal/${id}`,
   UPDATE_AUCTIONS_SET_CONFIRM: (id: string | number) =>
     `/auctions/set-confirm/${id}`,
+  UPDATE_AUCTIONS_SET_COMMING: (id: string | number) =>
+    `/auctions/set-comming/${id}`,
   CREATE_AUCTIONS: "/auctions/create",
 
   REGISTER_ATTEND_AUCTIONS: (auctionId: string) =>
