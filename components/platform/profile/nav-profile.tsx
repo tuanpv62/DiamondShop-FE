@@ -31,7 +31,7 @@ async function NavMenu({ searchParams }: IndexPageProps) {
 
 
  
-  const auctions = getTableAuctionsV2withUser(searchParams, "27");
+  const auctions = getTableAuctionsV2withUser(searchParams, session?.user.userId!);
 
  
   return (

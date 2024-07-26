@@ -25,7 +25,7 @@ export const AUCTION_URLS = {
   CREATE_AUCTIONS: "/auctions/create",
 
   REGISTER_ATTEND_AUCTIONS: (auctionId: string) =>
-    `/auctions/register-by-auctionId/${auctionId}`,
+    `/auctions/${auctionId}/register`,
 };
 
 //feedback

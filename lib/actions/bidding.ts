@@ -5,16 +5,14 @@ import { api, axiosAuth } from "../api-interceptor/api";
 import axios from "axios";
 
 export async function biddingAuction(
-  userId: string,
-  auctionId: string,
-  biddingPrice: number
+  bidId: number,
+  biddingPrice: number,
+  auctionId: string
 ) {
-  const url = `/biddings/bid`;
+  const url = `/bid/update/${bidId}`;
 
   try {
-    const res = await axiosAuth.post(url, {
-      userID: userId,
-      auctionID: auctionId,
+    const res = await axiosAuth.put(url, {
       biddingPrice: biddingPrice,
     });
 

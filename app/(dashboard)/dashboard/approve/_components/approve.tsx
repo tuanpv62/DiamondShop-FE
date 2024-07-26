@@ -8,6 +8,7 @@ import {
   updateStatusAcceptAuction,
   updateStatusRejectAuction,
 } from "@/lib/actions";
+import { getAuctionsFilterWithStatus } from "@/lib/v2/actions-v2/auction-v2";
 import { IAuction } from "@/types/dashboard";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,7 +16,7 @@ import React, { startTransition } from "react";
 import { toast } from "sonner";
 
 interface ApproveProps {
-  auctionPromise: ReturnType<typeof getAuctionsWithStatus>;
+  auctionPromise: ReturnType<typeof getAuctionsFilterWithStatus>;
 }
 
 const Approve = ({ auctionPromise }: ApproveProps) => {

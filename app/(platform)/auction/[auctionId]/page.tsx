@@ -15,10 +15,8 @@ import { getAuctionByIDV2 } from "@/lib/v2/actions-v2/auction-v2";
 const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
   const auction = await getAuctionByIDV2(params.auctionId);
   const feedback = getFeedBackAuction(params.auctionId);
-  const isLive = auction.data?.status === "1";
+  const isLive = auction.data?.status.toString() === "6";
 
-  // loading => client
-  // wating
   return (
     <>
       <BreadCrumb
@@ -29,16 +27,13 @@ const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
       />
 
       <div className="container mx-auto px-4 md:px-12 mt-10 mb-4 flex flex-col lg:flex-row">
+        {/* passing productImages =  [{id, image_url}, {} ,{}]  */}
         <LeftSideAuction productId={auction.data?.productID!} />
 
         <div className="w-full lg:w-3/5 md:pl-4">
-          {isLive ? (
-            <ListingDetailsRealTime
-              auctionId={auction.data?.auctionId.toString()!}
-            />
-          ) : (
-            <ListingDetails auction={auction.data} />
-          )}
+          <ListingDetailsRealTime
+            auctionId={auction.data?.auctionId.toString()!}
+          />
 
           <div className="mt-8 md:mt-0">
             <Tabs defaultValue="description" className="w-full lg:w-[700px]">
@@ -65,11 +60,7 @@ const AuctionIdPage = async ({ params }: { params: { auctionId: string } }) => {
                 </p>
               </TabsContent>
               <TabsContent value="bidding" className="overflow-y-auto ">
-                {isLive ? (
-                  <Bidding auctionId={auction.data?.auctionId.toString()!} />
-                ) : (
-                  <BiddingHistory auction={auction.data!} bids={[]} />
-                )}
+                <BiddingHistory auctionId={String(auction.data?.auctionId)!} />
               </TabsContent>
             </Tabs>
           </div>

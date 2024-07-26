@@ -7,20 +7,20 @@ import SeeMore from "@/components/platform/see-more";
 import ListingCardLoader from "@/components/loader/listing-card-loader";
 import ListingCard from "./comming-auction-card";
 import { AuctionStatus } from "@/types/dashboard";
-import { useGetAuctionsWithStatus } from "@/lib/v2/react-query-v2/queries-v2";
+import {
+  useGetAuctionsFilterStatus,
+  useGetAuctionsWithStatus,
+} from "@/lib/v2/react-query-v2/queries-v2";
 
 function AuctionGrid() {
-  const { data: commingAuction, isLoading } = useGetAuctionsWithStatus(
-    AuctionStatus.COMING
-  );
+  const { data: commingAuction, isLoading } = useGetAuctionsFilterStatus(5);
 
-  // số 6 là live nhé mốt sửa đi chú
   const auctionFilterByStatus = commingAuction?.data.filter(
     (auction) => Number(auction.status) === 5
   );
-  if (isLoading) {
-    return <ListingCardLoader />;
-  }
+  // if (isLoading) {
+  //   return <ListingCardLoader />;
+  // }
 
   return (
     <div className="grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:gap-y-10">

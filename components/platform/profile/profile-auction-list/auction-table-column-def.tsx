@@ -40,6 +40,7 @@ import {
   setApproveAuction,
   setCommingAuction,
   setConfirmAuction,
+  setWaitingAuction,
   updateReEvaluate,
   updateStatusAcceptAuction,
   updateStatusAuction,
@@ -402,7 +403,7 @@ export function fetchAutionsTableColumnDefs(
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
             )}
-            {Number(row.original.status) === 2 && (
+            {Number(row.original.status) === 1 && (
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>Trạng thái</DropdownMenuSubTrigger>
 
@@ -412,7 +413,7 @@ export function fetchAutionsTableColumnDefs(
                       startTransition(() => {
                         row.toggleSelected(false);
                         toast.promise(
-                          setConfirmAuction({
+                          setWaitingAuction({
                             id: row.original.auctionId.toString(),
                           }),
                           {

@@ -34,21 +34,15 @@ export const ViewEvaluateModal = () => {
   const { data: session } = useSession();
   const isOpenModal = isOpen && type === "evaluateModal";
 
-  //   {
-  //   "valuation": 0.01,
-  //   "duration": 0,
-  //   "depositPrice": 0.01,
-  //   "startPrice": 0.01,
-  //   "biddingPrice": 0.01,
-  // }
 
   const EvaluateSchema = z.object({
     valuation: z.coerce.number(),
     duration: z.coerce.number(),
-    depositPrice: z.coerce.number(),
+    depositPrice: z.coerce.number().min(10000, {message: "giá deposit nên lớn hơn 10000Đ"}),
     startPrice: z.coerce.number(),
-    biddingPrice: z.coerce.number(),
   });
+
+  
   const form = useForm<z.infer<typeof EvaluateSchema>>({
     resolver: zodResolver(EvaluateSchema),
     defaultValues: {
@@ -56,7 +50,6 @@ export const ViewEvaluateModal = () => {
       duration: 0,
       depositPrice: 0,
       startPrice: 0,
-      biddingPrice: 0,
     },
   });
 
@@ -101,28 +94,7 @@ export const ViewEvaluateModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid  space-y-4">
-              <FormField
-                control={form.control}
-                name="biddingPrice"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-white">
-                      Nhập giá khởi điểm
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        className="text-bgray-800 text-base border focus-visible:ring-0  focus-visible:ring-offset-0 border-bgray-300 dark:border-darkblack-400 dark:bg-darkblack-500 dark:text-white h-14 w-full focus:border-success-300 focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base"
-                        placeholder="Nhập biddingPrice"
-                        disabled={isLoading}
-                        {...field}
-                        type="number"
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+       
               <FormField
                 control={form.control}
                 name="depositPrice"

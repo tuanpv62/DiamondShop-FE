@@ -104,8 +104,8 @@ export const RegiterAuctionModal = () => {
             <p className="font-semibold">{data.auction?.startPrice}</p>
           </div>
           <div>
-            <p className="text-gray-600 mb-2">Tên người đấu giá:</p>
-            <p className="font-semibold">{session?.user.name}</p>
+            <p className="text-gray-600 mb-2">Email đấu giá:</p>
+            <p className="font-semibold">{session?.user.email}</p>
           </div>
         </div>
       </div>

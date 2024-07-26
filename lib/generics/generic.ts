@@ -52,3 +52,19 @@ export async function fetchSingleData<T>(
     return { data: null };
   }
 }
+
+
+export async function fetchSingleDataTOWALLET<T>(
+  url: string
+): Promise<ApiSingleResponse<T>> {
+  try {
+    const response = await axiosAuth.get(url);
+
+    const {data} = response;
+
+    return {data};
+  } catch (error) {
+    console.log("ERROR to fetching", error);
+    return { data: null };
+  }
+}

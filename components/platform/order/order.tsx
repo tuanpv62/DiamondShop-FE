@@ -122,6 +122,11 @@ function BodyOrder({ orderPromisse }: BodyOrderProps) {
     setShowModal(false);
     router.push("/");
   };
+
+
+  // Hiển thị thông tin của order đó thôi Và bấm cái nút call api POST của /payment/pay-order-with-wallet
+
+
   return (
     <div className="container mx-auto py-8">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

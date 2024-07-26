@@ -66,10 +66,12 @@ export default function ListingDetailsRealTime({
   });
 
   const isRegisterAuction = auctionData?.bidList.some(
-    (item) => item.userID.toString() === session?.user.id
+    (item) => item.userId === session?.user.userId
   );
-  const isStatusComing = auctionData?.status === "COMING";
-  const isStatusLive = auctionData?.status === "LIVE";
+
+  const isStatusComing = auctionData?.status.toString() === "5";
+
+  const isStatusLive = auctionData?.status.toString() === "6";
   const canBid = isRegisterAuction && isStatusLive;
 
   // need to optimize
@@ -77,13 +79,16 @@ export default function ListingDetailsRealTime({
     if (canBid && bidAmount !== null) {
       try {
         setIsLoading(true);
-        const userId = session?.user.id!;
+        // const userId = session?.user.userId!;
+        const bidIdToAuction = auctionData.bidList.filter(
+          (item) => item.userId === session?.user.userId!
+        )[0].bidId;
+
+ 
         const auctionId = auctionData.auctionId.toString();
-        const { success, error } = await biddingAuction(
-          userId,
-          auctionId,
-          bidAmount
-        );
+
+        // todo
+        const { success, error } = await biddingAuction(bidIdToAuction,bidAmount,auctionId);
         if (success) {
           toast.success("Tăng giá thành công");
         } else if (error) {
