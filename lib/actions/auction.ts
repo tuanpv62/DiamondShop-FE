@@ -149,12 +149,13 @@ export async function setApproveAuction({ id, values }: any) {
   }
 }
 export async function setCommingAuction({ id }: any) {
+ 
   try {
     const res = await axiosAuth.put(
-      AUCTION_URLS.UPDATE_AUCTIONS_SET_CONFIRM(id)
+      AUCTION_URLS.UPDATE_AUCTIONS_SET_COMMING(id)
     );
 
-    console.log("vintest", res);
+ 
     if (res.status === 200 && res.data.isError === false) {
       console.log("Auction comming successfully:", res.data.message);
       revalidatePath("/");
