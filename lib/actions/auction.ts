@@ -140,7 +140,7 @@ export async function setApproveAuction({ id, values }: any) {
     const res = await axiosAuth.put(
       AUCTION_URLS.UPDATE_AUCTIONS_SET_APPROVE(id),
       {
-        responsibleBy: values,
+        responsibleBy: "Admin",
       }
     );
 
@@ -150,7 +150,7 @@ export async function setApproveAuction({ id, values }: any) {
   }
 }
 export async function setConfirmAuction({ id, title, startDate }: any) {
-  console.log("kiki", id);
+ 
 
   try {
     const res = await axiosAuth.put(
@@ -160,6 +160,8 @@ export async function setConfirmAuction({ id, title, startDate }: any) {
         title: "admin",
       }
     );
+
+    console.log("vintest", res)
     if (res.status === 200 && res.data.isError === false) {
       console.log("Auction confirmed successfully:", res.data.message);
       revalidatePath("/dashboard/confirm");
@@ -169,7 +171,7 @@ export async function setConfirmAuction({ id, title, startDate }: any) {
     }
 
     // revalidatePath("/dashboard/confirm");
-  } catch (error) {
+  } catch (error: any) {
     console.log("FAIL to xac nhan");
 
     if (error.response) {

@@ -82,9 +82,9 @@ export const ServerSearch = () => {
           <CommandEmpty>No results found.</CommandEmpty>
 
           {filteredAuctions.map((auction) => (
-            <CommandItem key={auction.id}>
+            <CommandItem key={auction.auctionId}>
               <button
-                onClick={() => router.push(`auction/${auction.id}`)}
+                onClick={() => router.push(`auction/${auction.auctionId}`)}
                 className="flex "
               >
                 <Hash className="w-4 h-4 mr-2" />
