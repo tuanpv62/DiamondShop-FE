@@ -34,15 +34,17 @@ export const ViewEvaluateModal = () => {
   const { data: session } = useSession();
   const isOpenModal = isOpen && type === "evaluateModal";
 
-
   const EvaluateSchema = z.object({
     valuation: z.coerce.number(),
-    duration: z.coerce.number(),
-    depositPrice: z.coerce.number().min(10000, {message: "giá deposit nên lớn hơn 10000Đ"}),
-    startPrice: z.coerce.number(),
+    duration: z.coerce.number().min(10).max(30),
+    depositPrice: z.coerce
+      .number()
+      .min(1000, { message: "giá deposit nên lớn hơn 10000$" }),
+    startPrice: z.coerce
+      .number()
+      .min(1000, { message: "giá khởi điểm nên lớn hơn 1000$" }),
   });
 
-  
   const form = useForm<z.infer<typeof EvaluateSchema>>({
     resolver: zodResolver(EvaluateSchema),
     defaultValues: {
@@ -94,7 +96,6 @@ export const ViewEvaluateModal = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid  space-y-4">
-       
               <FormField
                 control={form.control}
                 name="depositPrice"

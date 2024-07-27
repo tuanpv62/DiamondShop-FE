@@ -9,6 +9,7 @@ export const AUCTION_URLS = {
   GET_AUCTIONS: "/auctions",
   GET_AUCTION_BY_ID: (id: string) => `/auctions/${id}`,
   GET_AUCTIONS_DEFAULT_PER_PAGE: "/auctions/list?page=1&per_page=8",
+  GET_PROFILES_DEFAULT_PER_PAGE: "/profile?page=1&per_page=5",
   GET_AUCTIONS_DEFAULT_STATUS: (status: string) =>
     `/auctions/list?page=1&per_page=8&status=${status}`,
   UPDATE_AUCTIONS: (id: string | number) => `/auctions/update-auction/${id}`,
@@ -36,5 +37,9 @@ export const FEEDBACK_URLS = {
     `/feedbacks/list?auctionID=${auctionId}`,
 };
 export const PAYMENT_URLS = {
-  UPDATE_PAYMENT_ORDER: `/payment/pay-order-with-wallet`,
+  UPDATE_PAYMENT_ORDER: "/payment/pay-order-with-wallet",
+};
+export const ORDER_URLS = {
+  GET_ORDER_BY_USER_ID: "/order/get-order-by-userid",
+  // UPDATE_PAYMENT_ORDER: "/order/get-order-by-userid",
 };

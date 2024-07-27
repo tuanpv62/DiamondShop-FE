@@ -23,21 +23,42 @@ interface OrdersTableProps {
 }
 
 export function TransactionTable({ transactionPromise }: OrdersTableProps) {
-  const { data, pageCount } = React.use(transactionPromise);
-  const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
-  const evaluateAuction: ITransaction[] = data.filter(
-    (item) => Number(item.status) === 1
+
+  ///...{ gpt
+  const [transactions, setTransactions] = React.useState<ITransaction[]>([]);
+  const [pageCount, setPageCount] = React.useState<number>(0);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [isPending, startTransition] = React.useTransition();
+
+  React.useEffect(() => {
+    const fetchOrders = async () => {
+      const searchParams = {}; // Define your search parameters here if any
+      try {
+        const response = await getTransactionByUserId();
+        setTransactions(response.data);
+        setPageCount(response.pageCount || 0);
+      } catch (error) {
+        console.error("Failed to fetch orders", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  const columns = React.useMemo(
+    () => fetchTransactionTableColumnDefs(isPending, startTransition, router),
+    [isPending, startTransition, router]
   );
 
-  const columns = React.useMemo<ColumnDef<ITransaction, unknown>[]>(
-    () => fetchTransactionTableColumnDefs(isPending, startTransition, router),
-    [isPending, router]
-  );
+  ///...}
+
   const { dataTable } = useDataTable({
-    data: data.sort((a, b) => b.transactionId - a.transactionId),
+    data: transactions,
     columns,
-    pageCount: 8,
+    pageCount: 10,
     searchableColumns,
     filterableColumns,
   });

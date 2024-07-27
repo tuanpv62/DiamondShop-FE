@@ -1,6 +1,9 @@
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton";
 import { Shell } from "@/components/shell";
-import { getTransactions } from "@/lib/actions/transaction";
+import {
+  getTransactionByUserId,
+  getTransactions,
+} from "@/lib/actions/transaction";
 import { SearchParams } from "@/types/table";
 import React from "react";
 import { TransactionTable } from "./_components/transaction-table";

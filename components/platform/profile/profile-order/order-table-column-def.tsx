@@ -41,6 +41,7 @@ import {
   setPaymentOrder,
 } from "@/lib/actions";
 import { Eye } from "lucide-react";
+import { ModalData, ModalType } from "@/hooks/use-modal";
 
 export function fetchOrderTableColumnDefs(
   isPending: boolean,

@@ -34,16 +34,6 @@ const UsersPage = ({ searchParams }: IndexPageProps) => {
           <TabsContent value="staff">
             Nhân viên here
             <Shell>
-              {/* {staffLoading ? (
-                <DataTableSkeleton columnCount={4} filterableColumnCount={2} />
-              ) : (
-                <UsersTable
-                  userType="staff"
-                  staffs={staffs?.data ?? []}
-                  pageCount={staffs?.pageCount ?? 0}
-                />
-              )} */}
-
               <React.Suspense
                 fallback={
                   <DataTableSkeleton
@@ -54,8 +44,6 @@ const UsersPage = ({ searchParams }: IndexPageProps) => {
               >
                 <UsersTable
                   usersPromise={staffs}
-                  // products={products?.data ?? []}
-                  // pageCount={products?.pageCount ?? 0}
                 />
               </React.Suspense>
             </Shell>
@@ -63,16 +51,6 @@ const UsersPage = ({ searchParams }: IndexPageProps) => {
           <TabsContent value="user">
             Khách hàng here.
             <Shell>
-              {/* {userLoading ? (
-                <DataTableSkeleton columnCount={4} filterableColumnCount={2} />
-              ) : (
-                <UsersTable
-                  userType="user"
-                  users={users?.data ?? []}
-                  pageCount={users?.pageCount ?? 0}
-                />
-              )} */}
-
               <React.Suspense
                 fallback={
                   <DataTableSkeleton
@@ -83,8 +61,6 @@ const UsersPage = ({ searchParams }: IndexPageProps) => {
               >
                 <UsersTable
                   usersPromise={users}
-                  // products={products?.data ?? []}
-                  // pageCount={products?.pageCount ?? 0}
                 />
               </React.Suspense>
             </Shell>

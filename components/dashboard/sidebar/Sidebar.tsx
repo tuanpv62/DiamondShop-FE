@@ -72,6 +72,7 @@ function Sidebar({ handleActive }: any) {
                   </div>
                 </Link>
               </li>
+
               {isAdmin && (
                 <li className="item py-[11px] text-bgray-900 dark:text-white">
                   <Link href="/dashboard/transaction">
@@ -81,28 +82,28 @@ function Sidebar({ handleActive }: any) {
                           <Icons.transactionSidebarIcon />
                         </span>
                         <span className="item-text text-lg font-medium leading-none">
-                          Giao dịch
+                          Hóa đơn
                         </span>
                       </div>
                     </div>
                   </Link>
                 </li>
               )}
-
-              {/* <li className="item py-[11px] text-bgray-900 dark:text-white">
-                <Link href="/dashboard/integrations">
+              <li className="item py-[11px] text-bgray-900 dark:text-white">
+                <Link href="/dashboard/orders">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2.5">
                       <span className="item-ico">
-                        <Icons.intergrationsSidebarIcon />
+                        <Icons.historySidebarIcon />
                       </span>
                       <span className="item-text text-lg font-medium leading-none">
-                        Integrations
+                        Đơn Hàng
                       </span>
                     </div>
                   </div>
                 </Link>
-              </li> */}
+              </li>
+
               {isAdmin && (
                 <li
                   className="item py-[11px] text-bgray-900 dark:text-white"
@@ -191,7 +192,7 @@ function Sidebar({ handleActive }: any) {
                       Tạo Mới Đấu Giá
                     </Link>
                   </li> */}
-          
+
                   {isAdmin && (
                     <li>
                       <Link
@@ -223,21 +224,6 @@ function Sidebar({ handleActive }: any) {
                     </li>
                   )}
                 </ul>
-              </li>
-
-              <li className="item py-[11px] text-bgray-900 dark:text-white">
-                <Link href="/dashboard/orders">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2.5">
-                      <span className="item-ico">
-                        <Icons.historySidebarIcon />
-                      </span>
-                      <span className="item-text text-lg font-medium leading-none">
-                        Đơn Hàng
-                      </span>
-                    </div>
-                  </div>
-                </Link>
               </li>
             </ul>
           </div>

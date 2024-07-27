@@ -13,7 +13,10 @@ import {
 } from "./transaction-table-column-def";
 import { useRouter } from "next/navigation";
 import { ITransaction } from "@/types/dashboard/transaction-type";
-import { getTransactions } from "@/lib/actions/transaction";
+import {
+  getTransactionByUserId,
+  getTransactions,
+} from "@/lib/actions/transaction";
 
 interface TransactionsTableProps {
   transactionPromise: ReturnType<typeof getTransactions>;
@@ -33,7 +36,7 @@ export function TransactionTable({
   const { dataTable } = useDataTable({
     data,
     columns,
-    pageCount,
+    pageCount: 10,
     searchableColumns,
     filterableColumns,
   });

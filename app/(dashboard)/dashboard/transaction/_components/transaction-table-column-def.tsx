@@ -14,7 +14,8 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 
 import { ITransaction } from "@/types/dashboard/transaction-type";
 import { MdOutlinePending } from "react-icons/md";
-import { FaRegCircleCheck } from "react-icons/fa6";
+import { FaArrowRotateLeft } from "react-icons/fa6";
+import { TiTick } from "react-icons/ti";
 import { FcCancel } from "react-icons/fc";
 import { BiSolidBank } from "react-icons/bi";
 import { FaWallet } from "react-icons/fa";
@@ -52,11 +53,13 @@ export function fetchTransactionTableColumnDefs(
       enableHiding: false,
     },
     {
-      accessorKey: "id",
+      accessorKey: "transactionId",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="TransactionID" />
       ),
-      cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+      cell: ({ row }) => (
+        <div className="w-[80px]">{row.getValue("transactionId")}</div>
+      ),
       enableSorting: false,
       enableHiding: false,
     },
@@ -69,9 +72,15 @@ export function fetchTransactionTableColumnDefs(
         const transactionCode = row.getValue("transactionCode") as string;
         const parts = transactionCode.split("-");
 
+        if (parts.length < 3 || !parts[1] || parts[1].length < 12) {
+          console.error("Invalid transaction code format:", transactionCode);
+          return <div className="text-red-500">Invalid format</div>;
+        }
+
         const firstPart = parts[0];
         const secondPart = parts[1];
         const thirdPart = parts[2];
+
         // Tách chuỗi thời gian thành các phần nhỏ hơn
         const year = secondPart.substring(0, 4);
         const month = secondPart.substring(4, 6);
@@ -177,8 +186,10 @@ export function fetchTransactionTableColumnDefs(
           </div>
         );
       },
-      filterFn: (row, id, value) => {
-        return value instanceof Array && value.includes(row.getValue(id));
+      filterFn: (row, transactionId, value) => {
+        return (
+          value instanceof Array && value.includes(row.getValue(transactionId))
+        );
       },
     },
     {
@@ -192,42 +203,25 @@ export function fetchTransactionTableColumnDefs(
         let statusText;
         let statusIcon;
         let statusColor;
-        if (status === "PENDING") {
-          statusText = "PENDING";
+        if (status === "SUCCESS") {
+          statusText = "SUCCESS";
           statusIcon = (
-            <MdOutlinePending
+            <TiTick
               className="mr-2 size-6 text-muted-foreground text-yellow-500 font-bold"
               aria-hidden="true"
             />
           );
           statusColor = "text-yellow-500";
-        } else if (status === "CONFIRMED") {
-          statusText = "CONFIRMED";
-          statusColor = "text-green-500";
+        }
+        if (status === "APPROVE") {
+          statusText = "APPROVE";
           statusIcon = (
-            <FaRegCircleCheck
-              className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
-              aria-hidden="true"
-            />
-          );
-        } else if (status === "FAILED") {
-          statusText = "REJECT";
-          statusIcon = (
-            <FcCancel
+            <FaArrowRotateLeft
               className="mr-2 size-6 text-muted-foreground text-red-500 font-bold"
               aria-hidden="true"
             />
           );
           statusColor = "text-red-500";
-        } else {
-          statusText = status;
-          statusIcon = (
-            <FcCancel
-              className="mr-2 size-6 text-muted-foreground"
-              aria-hidden="true"
-            />
-          );
-          statusColor = "";
         }
 
         return (
@@ -237,8 +231,10 @@ export function fetchTransactionTableColumnDefs(
           </div>
         );
       },
-      filterFn: (row, id, value) => {
-        return value instanceof Array && value.includes(row.getValue(id));
+      filterFn: (row, transactionId, value) => {
+        return (
+          value instanceof Array && value.includes(row.getValue(transactionId))
+        );
       },
     },
   ];
@@ -248,7 +244,7 @@ export const filterableColumns: DataTableFilterableColumn<ITransaction>[] = [
   {
     id: "status",
     title: "status",
-    options: ["PENDING", "CONFIRMED", "FAILED"].map((status) => ({
+    options: ["APPROVE", "SUCCESS"].map((status) => ({
       label: status[0]?.toUpperCase() + status.slice(1),
       value: status,
     })),

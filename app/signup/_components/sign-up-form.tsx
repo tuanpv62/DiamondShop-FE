@@ -35,7 +35,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { startTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
+import { number, z } from "zod";
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -46,18 +46,34 @@ const SignUpForm = () => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  const genderOptions = [
-    { label: "Nam", value: "MALE" },
-    { label: "Nữ", value: "FEMALE" },
-    { label: "Other", value: "OTHER" },
-  ];
 
   const RegisterSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-    name: z.string().min(6),
-    dob: z.date(),
-    gender: z.enum(["MALE", "FEMALE", "OTHER"]),
+    email: z
+      .string()
+      .email({ message: "Invalid email format" })
+      .max(255, { message: "Email must be at most 255 characters long" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" })
+      .regex(/[A-Za-z]/, {
+        message: "Password must contain at least one letter",
+      })
+      .regex(/\d/, { message: "Password must contain at least one number" })
+      .regex(/[^A-Za-z0-9]/, {
+        message: "Password must contain at least one special character",
+      }),
+    name: z
+      .string()
+      .max(255, { message: "Name must be at most 255 characters long" }),
+    address: z
+      .string()
+      .max(255, { message: "Address must be at most 255 characters long" }),
+    phone: z.string().regex(/^0\d{10}$/, {
+      message: "Phone number must start with 0 and have 11 digits",
+    }),
+    dob: z.date().refine((date) => date < new Date(2006, 0, 1), {
+      message: "Date of birth must be before 2006",
+    }),
   });
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -66,21 +82,28 @@ const SignUpForm = () => {
       email: "",
       password: "",
       name: "",
+      address: "",
+      phone: "",
       dob: undefined,
-      gender: undefined,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     try {
       const dobFormat = values.dob
-        ? new Date(values.dob).toISOString().replace("Z", "")
+        ? new Date(values.dob).toISOString()
         : undefined;
 
-      const formData = { ...values, dob: dobFormat };
+      const formData = {
+        ...values,
+        phone: values.phone?.toString() ?? "",
+        dob: dobFormat,
+      };
+      console.log("fomr", formData);
+      console.log("date", formData.dob);
 
       await axios
-        .post("https://orchid.fams.io.vn/api/v1/users/register", formData)
+        .post("https://diamondshopapi.azurewebsites.net/api/v1", formData)
         .then((response) => {
           toast.success("Đăng ký thành công");
           console.log(response.data);
@@ -206,27 +229,34 @@ const SignUpForm = () => {
 
         <FormField
           control={form.control}
-          name="gender"
+          name="phone"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Select
+                <Input
+                  className="text-bgray-800 text-base border focus-visible:ring-0  focus-visible:ring-offset-0 border-bgray-300 dark:border-darkblack-400 dark:bg-darkblack-500 dark:text-white h-14 w-full focus:border-success-300 focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base"
+                  placeholder="Nhập số điện thoại..."
                   disabled={isLoading}
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger className="text-bgray-800 text-base border focus-visible:ring-0  focus-visible:ring-offset-0 border-bgray-300 dark:border-darkblack-400 dark:bg-darkblack-500 dark:text-white h-14 w-full focus:border-success-300 focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base">
-                    <SelectValue placeholder="Chọn giới tính" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {genderOptions.map((gender) => (
-                      <SelectItem key={gender.value} value={gender.value}>
-                        <span>{gender.label}</span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  className="text-bgray-800 text-base border focus-visible:ring-0  focus-visible:ring-offset-0 border-bgray-300 dark:border-darkblack-400 dark:bg-darkblack-500 dark:text-white h-14 w-full focus:border-success-300 focus:ring-0 rounded-lg px-4 py-3.5 placeholder:text-bgray-500 placeholder:text-base"
+                  placeholder="Nhập địa chỉ..."
+                  disabled={isLoading}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

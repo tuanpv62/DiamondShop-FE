@@ -85,6 +85,6 @@ export const useGetOrderByUserId = (
 ) => {
   return useQuery<ApiListResponse<IOrder>>({
     queryKey: [QUERY_KEYS.GET_ORDERS, searchTerm, userID],
-    queryFn: () => getOrdersByUserId(searchTerm, userID),
+    queryFn: () => getOrdersByUserId(),
   });
 };

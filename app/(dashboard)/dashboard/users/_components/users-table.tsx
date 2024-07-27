@@ -8,7 +8,6 @@ import { DataTable } from "@/components/data-table/data-table";
 
 import {
   fetchTasksTableColumnDefs,
-  filterableColumns,
   searchableColumns,
 } from "./users-table-column-def";
 import { IUser } from "@/types/dashboard";
@@ -26,12 +25,10 @@ interface UsersTableProps {
 
 export function UsersTable({
   usersPromise,
-  // staffs
+}: // staffs
 //  , users
 //   , userType
 //   , pageCount
-}: 
-
 UsersTableProps) {
   const { data, pageCount } = React.use(usersPromise);
   const [isPending, startTransition] = React.useTransition();
@@ -44,9 +41,8 @@ UsersTableProps) {
   const { dataTable } = useDataTable({
     data,
     columns,
-    pageCount,
+    pageCount: 20,
     searchableColumns,
-    filterableColumns,
   });
 
   return (
@@ -54,7 +50,7 @@ UsersTableProps) {
       dataTable={dataTable}
       columns={columns}
       searchableColumns={searchableColumns}
-      filterableColumns={filterableColumns}
+      // filterableColumns={filterableColumns}
       //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
       //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
     />

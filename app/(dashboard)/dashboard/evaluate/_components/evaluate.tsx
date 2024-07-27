@@ -45,7 +45,7 @@ const Evaluate = ({ auctionPromise }: EvaluateProps) => {
                   priority={true}
                   height={64}
                   width={64}
-                  src={auction.image_url}
+                  src={auction.productImages}
                   alt="Stack Overflow"
                   className="rounded-full"
                 />

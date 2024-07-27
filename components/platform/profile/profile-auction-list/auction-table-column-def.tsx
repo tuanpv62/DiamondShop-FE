@@ -229,7 +229,7 @@ export function fetchAutionsTableColumnDefs(
       cell: ({ row }) => {
         const status = Number(row.original.status);
         if (!status) {
-          return null;
+          return "PENDING";
         }
 
         return (
@@ -283,83 +283,6 @@ export function fetchAutionsTableColumnDefs(
         );
       },
     },
-    // {
-    //   accessorKey: "status",
-    //   header: ({ column }) => (
-    //     <DataTableColumnHeader column={column} title="Duyệt bài" />
-    //   ),
-    //   cell: ({ row }) => {
-    //     const status = row.original.status;
-
-    //     const isApprove = !!row.original.approved;
-    //     const isReject = !!row.original.rejected;
-
-    //     // nếu status = WAITING và isApprove = false và isReject = false  => Trạng thái Chờ duyệt bài
-    //     // nếu status = COMING và isApprove = true và is sReject = false  =>   Đã được duyệt
-    //     // nếu status = END và is isApprove = false và is sReject = true  => Ko dc duyệt
-
-    //     let statusText;
-    //     let statusIcon;
-    //     let statusColor;
-    //     if (status === "WAITING" && !isApprove && !isReject) {
-    //       statusText = "PENDING";
-    //       statusIcon = (
-    //         <MdOutlinePending
-    //           className="mr-2 size-6 text-muted-foreground text-yellow-500 font-bold"
-    //           aria-hidden="true"
-    //         />
-    //       );
-    //       statusColor = "text-yellow-500";
-    //     } else if (status !== "WAITING" && isApprove && !isReject) {
-    //       statusText = "APPROVE";
-    //       statusColor = "text-green-500";
-    //       statusIcon = (
-    //         <FaRegCircleCheck
-    //           className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
-    //           aria-hidden="true"
-    //         />
-    //       );
-    //     } else if (status === "LIVE" && isApprove && !isReject) {
-    //       statusText = "APPROVE";
-    //       statusColor = "text-green-500";
-    //       statusIcon = (
-    //         <FaRegCircleCheck
-    //           className="mr-2 size-6 text-muted-foreground text-green-500 font-bold"
-    //           aria-hidden="true"
-    //         />
-    //       );
-    //     } else if (status === "END" && isReject) {
-    //       statusText = "REJECT";
-    //       statusIcon = (
-    //         <FcCancel
-    //           className="mr-2 size-6 text-muted-foreground text-red-500 font-bold"
-    //           aria-hidden="true"
-    //         />
-    //       );
-    //       statusColor = "text-red-500";
-    //     } else {
-    //       statusText = "END";
-    //       statusIcon = (
-    //         <FcCancel
-    //           className="mr-2 size-6 text-muted-foreground text-red-500 font-bold"
-    //           aria-hidden="true"
-    //         />
-    //       );
-    //       statusColor = "text-red-500";
-    //     }
-
-    //     return (
-    //       <div className="flex items-center bg-slate-700 w-full h-14 rounded-md px-2">
-    //         <span>{statusIcon}</span>
-    //         <span className={`capitalize ${statusColor}`}>{statusText}</span>
-    //       </div>
-    //     );
-    //   },
-    //   filterFn: (row, auctionId, value) => {
-    //     return value instanceof Array && value.includes(row.getValue(auctionId));
-    //   },
-    // },
-
     {
       id: "actions",
       cell: ({ row }) => (

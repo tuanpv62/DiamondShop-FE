@@ -1,3 +1,53 @@
+// "use client";
+
+// import * as React from "react";
+// import { type ColumnDef } from "@tanstack/react-table";
+// import { useDataTable } from "@/hooks/use-data-table";
+// import { DataTable } from "@/components/data-table/data-table";
+// import {
+//   searchableColumns,
+//   filterableColumns,
+//   fetchOrderTableColumnDefs,
+// } from "./order-table-column-def";
+// import { useRouter } from "next/navigation";
+// import { IOrder } from "@/types/dashboard";
+// import { getOrdersByUserId } from "@/lib/actions";
+
+// interface OrdersTableProps {
+//   orderPromise: ReturnType<typeof getOrdersByUserId>;
+// }
+
+// export function OrderTable({ orderPromise }: OrdersTableProps) {
+//   const { data, pageCount } = React.use(orderPromise);
+//   const [isPending, startTransition] = React.useTransition();
+
+//   const router = useRouter();
+//   const columns = React.useMemo<ColumnDef<IOrder, unknown>[]>(
+//     () => fetchOrderTableColumnDefs(isPending, startTransition, router),
+//     [isPending, router]
+//   );
+//   const { dataTable } = useDataTable({
+//     data,
+//     columns,
+//     pageCount: 10,
+//     searchableColumns,
+//     filterableColumns,
+//   });
+
+//   return (
+//     <div className="space-y-4 overflow-hidden">
+//       <DataTable
+//         dataTable={dataTable}
+//         columns={columns}
+//         searchableColumns={searchableColumns}
+//         filterableColumns={filterableColumns}
+//         //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
+//         //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
+//       />
+//     </div>
+//   );
+// }
+
 "use client";
 
 import * as React from "react";
@@ -16,20 +66,10 @@ import { IOrder } from "@/types/dashboard";
 import { getOrders, getOrdersByUserId } from "@/lib/actions";
 
 interface OrdersTableProps {
-  orderPromise: ReturnType<typeof getOrders>;
+  orderPromise: ReturnType<typeof getOrdersByUserId>;
 }
-
 export function OrderTable({ orderPromise }: OrdersTableProps) {
-  // const { data, pageCount } = React.use(orderPromise);
-  // const [isPending, startTransition] = React.useTransition();
-  // console.log(data)
   const router = useRouter();
-  // const columns = React.useMemo<ColumnDef<IOrder, unknown>[]>(
-  //   () => fetchOrderTableColumnDefs(isPending, startTransition, router),
-  //   [isPending, router]
-  // );
-
-  ///...{ gpt
   const [orders, setOrders] = React.useState<IOrder[]>([]);
   const [pageCount, setPageCount] = React.useState<number>(0);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -37,11 +77,11 @@ export function OrderTable({ orderPromise }: OrdersTableProps) {
 
   React.useEffect(() => {
     const fetchOrders = async () => {
-      const searchParams = {}; // Define your search parameters here if any
       try {
-        const response = await getOrders(searchParams);
+        const response = await getOrdersByUserId();
         setOrders(response.data);
         setPageCount(response.pageCount || 0);
+        console.log(pageCount);
       } catch (error) {
         console.error("Failed to fetch orders", error);
       } finally {
@@ -57,12 +97,10 @@ export function OrderTable({ orderPromise }: OrdersTableProps) {
     [isPending, startTransition, router]
   );
 
-  ///...}
-
   const { dataTable } = useDataTable({
     data: orders,
     columns,
-    pageCount,
+    pageCount: 10,
     searchableColumns,
     filterableColumns,
   });
@@ -77,8 +115,6 @@ export function OrderTable({ orderPromise }: OrdersTableProps) {
       columns={columns}
       searchableColumns={searchableColumns}
       filterableColumns={filterableColumns}
-      //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
-      //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
     />
   );
 }

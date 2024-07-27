@@ -2,7 +2,12 @@
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 
 import { SearchParams } from "@/types/table";
-import { ApiListResponse, fetchListData } from "@/lib/generics";
+import {
+  ApiListResponse,
+  fetchListData,
+  fetchListDataV2,
+  fetchListDataV3,
+} from "@/lib/generics";
 
 import { ITransaction } from "@/types/dashboard/transaction-type";
 
@@ -16,13 +21,12 @@ export async function getTransactions(
   return await fetchListData(url, searchParams);
 }
 
-export async function getTransactionByUserId(
-  searchParams: SearchParams,
-  userId: string
-): Promise<ApiListResponse<ITransaction>> {
+export async function getTransactionByUserId(): Promise<
+  ApiListResponse<ITransaction>
+> {
   noStore();
-  // const url = `/transactions?userId=${userId}`;
+
   const url = `/transaction/get-by-account`;
 
-  return await fetchListData(url, searchParams);
+  return await fetchListDataV2(url);
 }

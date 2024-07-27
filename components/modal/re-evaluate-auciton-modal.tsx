@@ -67,7 +67,6 @@ export const ViewReEvaluateModal = () => {
       toast.promise(
         updateReEvaluate({
           id: data.auction?.auctionId,
-
           values: values,
         }),
         {

@@ -9,7 +9,7 @@ import { api, axiosAuth } from "@/lib/api-interceptor/api";
 export async function getUserWithRoleCustomer(
   searchParams: SearchParams
 ): Promise<ApiListResponse<IUser>> {
-  const url = `/users?role=CUSTOMER`;
+  const url = `/get-all?RoleId=4`;
 
   noStore();
   return await fetchListData(url, searchParams);
@@ -18,7 +18,7 @@ export async function getUserWithRoleCustomer(
 export async function getUserWithRoleStaff(
   searchParams: SearchParams
 ): Promise<ApiListResponse<IUser>> {
-  const url = `/users?role=STAFF`;
+  const url = `/get-all?RoleId=3`;
   noStore();
 
   return await fetchListData(url, searchParams);

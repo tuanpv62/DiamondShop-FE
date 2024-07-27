@@ -140,6 +140,7 @@ export async function getTableTramsactionsV2withUser(
 
   return await fetchListData(AUCTION_URLS_V2.GET_TRANSACTIONS, searchParams);
 }
+
 export async function getTableOrderV2withUser(
   searchParams: SearchParams
 ): Promise<ApiListResponse<IOrder>> {

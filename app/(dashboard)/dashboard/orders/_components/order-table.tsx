@@ -34,7 +34,7 @@ export function OrderTable({ orderPromise }: OrdersTableProps) {
   const { dataTable } = useDataTable({
     data,
     columns,
-    pageCount,
+    pageCount: 10,
     searchableColumns,
     filterableColumns,
   });

@@ -17,7 +17,12 @@ import {
 
 import axios from "axios";
 import { axiosAuth } from "@/lib/api-interceptor/api";
-import { AUCTION_URLS, FEEDBACK_URLS, PAYMENT_URLS } from "./action-key";
+import {
+  AUCTION_URLS,
+  FEEDBACK_URLS,
+  ORDER_URLS,
+  PAYMENT_URLS,
+} from "./action-key";
 import { AUCTION_URLS_V2 } from "../v2/actions-v2/action-key-v2";
 
 export async function getAuctions(): Promise<ApiListResponse<IAuction>> {
@@ -123,7 +128,7 @@ export async function updateReEvaluate({ id, values }: any) {
       }
     );
 
-    revalidatePath("/dashboard/auctions");
+    revalidatePath("/profile");
   } catch (error) {
     console.log("FALI to dinh gia");
   }
@@ -192,9 +197,9 @@ export async function setPaymentOrder({ id }: any) {
   console.log("kiki", id);
 
   try {
-    const res = await axiosAuth.post(PAYMENT_URLS.UPDATE_PAYMENT_ORDER, {
-      orderId: id,
-    });
+    const tes = { orderId: id };
+    console.log("kiki12", tes);
+    const res = await axiosAuth.post(PAYMENT_URLS.UPDATE_PAYMENT_ORDER, tes);
 
     if (res.status === 200 && res.data.isError === false) {
       console.log("Payment successfully:", res.data.message);

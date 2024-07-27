@@ -12,6 +12,8 @@ export const AUCTION_URLS_V2 = {
 
   GET_AUCTIONS_WITH_STATUS: (status: string) => `/auctions?Status=${status}`,
   GET_AUCTION_BY_USERID: (id: string) => `/auctions?CreateByUserId=${id}`,
+  GET_TRANSACTION_BY_USERID: (id: string) =>
+    `/transaction/get-by-account?CreateByUserId=${id}`,
 
   GET_AUCTION: "/auction",
   GET_AUCTION_BY_ID: (id: string) => `/auctions/${id}`,
