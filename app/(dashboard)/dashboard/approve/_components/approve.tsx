@@ -47,7 +47,7 @@ const Approve = ({ auctionPromise }: ApproveProps) => {
                   priority={true}
                   height={64}
                   width={64}
-                  src={auction.image_url}
+                  src={auction.image_url ? auction.image_url : "/images/avatar.jpg"}
                   alt="Stack Overflow"
                   className="rounded-full"
                 />

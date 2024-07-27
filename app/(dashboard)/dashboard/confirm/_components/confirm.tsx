@@ -46,7 +46,7 @@ const Confirm = ({ auctionPromise }: ConfirmProps) => {
                   priority={true}
                   height={64}
                   width={64}
-                  src={auction.image_url}
+                  src={auction.image_url ? auction.image_url : "/images/avatar.jpg"}
                   alt="Stack Overflow"
                   className="rounded-full"
                 />
@@ -64,12 +64,7 @@ const Confirm = ({ auctionPromise }: ConfirmProps) => {
               <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
                 Giá khởi điểm : {auction.startPrice}
               </p>
-              {/* <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-            Ngày bắt đầu: {auction.startPrice}
-          </p>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-            Ngày kết thúc : {auction.startPrice}
-          </p> */}
+        
             </div>
 
             <div className="flex justify-between space-x-4">
