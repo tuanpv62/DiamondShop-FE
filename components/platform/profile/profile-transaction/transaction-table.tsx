@@ -9,10 +9,13 @@ import { DataTable } from "@/components/data-table/data-table";
 import {
   searchableColumns,
   filterableColumns,
-  fetchTransactionTableColumnDefs
+  fetchTransactionTableColumnDefs,
 } from "./transaction-table-column-def";
 import { useRouter } from "next/navigation";
-import { getTransactionByUserId, getTransactions } from "@/lib/actions/transaction";
+import {
+  getTransactionByUserId,
+  getTransactions,
+} from "@/lib/actions/transaction";
 import { IOrder, ITransaction } from "@/types/dashboard";
 
 interface OrdersTableProps {
@@ -20,30 +23,35 @@ interface OrdersTableProps {
 }
 
 export function TransactionTable({ transactionPromise }: OrdersTableProps) {
-  const { data, pageCount  } = React.use(transactionPromise);
+  const { data, pageCount } = React.use(transactionPromise);
   const [isPending, startTransition] = React.useTransition();
-  // console.log(data)
   const router = useRouter();
+  const evaluateAuction: ITransaction[] = data.filter(
+    (item) => Number(item.status) === 1
+  );
+
   const columns = React.useMemo<ColumnDef<ITransaction, unknown>[]>(
     () => fetchTransactionTableColumnDefs(isPending, startTransition, router),
     [isPending, router]
   );
   const { dataTable } = useDataTable({
-    data,
+    data: data.sort((a, b) => b.transactionId - a.transactionId),
     columns,
-    pageCount,
+    pageCount: 8,
     searchableColumns,
     filterableColumns,
   });
 
   return (
-    <DataTable
-      dataTable={dataTable}
-      columns={columns}
-      searchableColumns={searchableColumns}
+    <div className="space-y-4 overflow-hidden">
+      <DataTable
+        dataTable={dataTable}
+        columns={columns}
+        searchableColumns={searchableColumns}
         filterableColumns={filterableColumns}
-      //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
-      //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
-    />
+        //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
+        //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
+      />
+    </div>
   );
 }

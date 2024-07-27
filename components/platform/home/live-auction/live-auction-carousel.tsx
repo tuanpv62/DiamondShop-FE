@@ -55,6 +55,7 @@ export default function DestinationCarousel({ data }: LiveAuctionsProps) {
               productName={item.productName}
               title={item.title}
               productCode={item.productCode}
+              productImages={item.image_url}
               image_url={item.image_url}
               endDate={item.endDate!}
             />

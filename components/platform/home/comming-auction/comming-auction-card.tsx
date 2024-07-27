@@ -9,6 +9,7 @@ import FancyText from "@carefully-coded/react-text-gradient";
 interface ListingCardProps {
   id: number;
   productName: string;
+  productImages?: string;
   productCode: string;
   startPrice: number;
   endPrice: number;
@@ -37,6 +38,7 @@ export default function ListingCard({
   created_at,
   updated_at,
   remindAt,
+  productImages,
   idCss,
   image_url,
   startDate,
@@ -52,9 +54,9 @@ export default function ListingCard({
               <Image
                 className="aspect-[34/25] bg-gray-lighter transition-all duration-500 group-hover/item:scale-110"
                 src={
-                  image_url
+                  productImages && image_url
                     ? image_url
-                    : "/images/hoa-lan//img/gemstones/Emerald_480x480.png"
+                    : "https://images.unsplash.com/photo-1613843351058-1dd06fda7c02?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 }
                 width={816}
                 height={600}

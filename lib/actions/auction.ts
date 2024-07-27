@@ -1,7 +1,12 @@
 "use server";
 
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
-import { IAuction, IAuctionCreateField, IFeedBack } from "@/types/dashboard";
+import {
+  IAuction,
+  IAuctionCreateField,
+  IFeedBack,
+  IOrder,
+} from "@/types/dashboard";
 import { SearchParams } from "@/types/table";
 import {
   ApiListResponse,
@@ -12,7 +17,7 @@ import {
 
 import axios from "axios";
 import { axiosAuth } from "@/lib/api-interceptor/api";
-import { AUCTION_URLS, FEEDBACK_URLS } from "./action-key";
+import { AUCTION_URLS, FEEDBACK_URLS, PAYMENT_URLS } from "./action-key";
 import { AUCTION_URLS_V2 } from "../v2/actions-v2/action-key-v2";
 
 export async function getAuctions(): Promise<ApiListResponse<IAuction>> {
@@ -183,6 +188,42 @@ export async function setCommingAuction({ id }: any) {
     throw error; // Re-throw the error so it can be handled by the caller
   }
 }
+export async function setPaymentOrder({ id }: any) {
+  console.log("kiki", id);
+
+  try {
+    const res = await axiosAuth.post(PAYMENT_URLS.UPDATE_PAYMENT_ORDER, {
+      orderId: id,
+    });
+
+    if (res.status === 200 && res.data.isError === false) {
+      console.log("Payment successfully:", res.data.message);
+      revalidatePath("/");
+      return res.data;
+    } else {
+      throw new Error(res.data.message || "Unexpected response from server");
+    }
+
+    // revalidatePath("/dashboard/confirm");
+  } catch (error: any) {
+    console.log("FAIL to Payment");
+
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+      console.error("Response headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No response received:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error setting up request:", error.message);
+    }
+    throw error; // Re-throw the error so it can be handled by the caller
+  }
+}
 
 export async function setWaitingAuction({ id }: any) {
   try {
@@ -228,8 +269,6 @@ export async function setConfirmAuction({ id, title, startDate }: any) {
         title: "admin",
       }
     );
-
-    console.log("vintest", res);
     if (res.status === 200 && res.data.isError === false) {
       console.log("Auction confirmed successfully:", res.data.message);
       revalidatePath("/dashboard/confirm");

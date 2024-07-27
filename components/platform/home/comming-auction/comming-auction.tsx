@@ -36,6 +36,7 @@ function AuctionGrid() {
           status={item.status}
           depositPrice={item.depositPrice}
           quantity={item.quantity}
+          productImages={item.image_url}
           modifiedBy={item.modifiedBy}
           created_at={item.created_at}
           updated_at={item.updated_at}

@@ -20,15 +20,11 @@ export async function getOrders(
   return await fetchListData(url, searchParams);
 }
 
-export async function getOrdersByUserId(
-  searchParams: SearchParams,
-  userID: string
-): Promise<ApiListResponse<IOrder>> {
+export async function getOrdersByUserId(): Promise<ApiListResponse<IOrder>> {
   noStore();
-  const url = `/order/get-all/${userID}`;
-  // const url = `/order/get-all`;
+  const url = `/order/get-order-by-userid`;
 
-  return await fetchListData(url, searchParams);
+  return await fetchListData(url);
 }
 
 export async function getOrdersByOrderId(

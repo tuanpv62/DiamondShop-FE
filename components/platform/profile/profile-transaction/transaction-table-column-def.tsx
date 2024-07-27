@@ -23,10 +23,8 @@ import { useState } from "react";
 export function fetchTransactionTableColumnDefs(
   isPending: boolean,
   startTransition: React.TransitionStartFunction,
-  router: AppRouterInstance,
+  router: AppRouterInstance
 ): ColumnDef<ITransaction, unknown>[] {
-
-
   return [
     {
       id: "select",
@@ -54,11 +52,13 @@ export function fetchTransactionTableColumnDefs(
       enableHiding: false,
     },
     {
-      accessorKey: "id",
+      accessorKey: "transactionId",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="TransactionID" />
       ),
-      cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
+      cell: ({ row }) => (
+        <div className="w-[80px]">{row.getValue("transactionId")}</div>
+      ),
       enableSorting: false,
       enableHiding: false,
     },
@@ -209,8 +209,10 @@ export function fetchTransactionTableColumnDefs(
           </div>
         );
       },
-      filterFn: (row, id, value) => {
-        return value instanceof Array && value.includes(row.getValue(id));
+      filterFn: (row, transactionId, value) => {
+        return (
+          value instanceof Array && value.includes(row.getValue(transactionId))
+        );
       },
     },
   ];

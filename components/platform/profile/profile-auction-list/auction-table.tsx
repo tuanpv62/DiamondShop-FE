@@ -29,42 +29,34 @@ export function AuctionTable({ auctionPromise }: AutionsTableProps) {
   // console.log(data)
   const { data: session } = useSession();
 
-
-    const evaluateAuction: IAuction[] = data.filter((item) => Number(item.status) === 1 )
-  
+  const evaluateAuction: IAuction[] = data.filter(
+    (item) => Number(item.status) === 1
+  );
 
   const columns = React.useMemo<ColumnDef<IAuction, unknown>[]>(
     () =>
-      fetchAutionsTableColumnDefs(
-        isPending,
-        startTransition,
-        router,
-        onOpen,
-
-      ),
+      fetchAutionsTableColumnDefs(isPending, startTransition, router, onOpen),
     [isPending, router, onOpen]
   );
 
   const { dataTable } = useDataTable({
-    data: data.sort((a,b) => b.auctionId - a.auctionId ) ,
+    data: data.sort((a, b) => b.auctionId - a.auctionId),
     columns,
-    pageCount,
+    pageCount: 10,
     searchableColumns,
     filterableColumns,
   });
 
   return (
     <div className="space-y-4 overflow-hidden">
-        <DataTable
-          dataTable={dataTable}
-          columns={columns}
-          searchableColumns={searchableColumns}
-          filterableColumns={filterableColumns}
-          //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
-          //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
-        />
-      
-      
+      <DataTable
+        dataTable={dataTable}
+        columns={columns}
+        searchableColumns={searchableColumns}
+        filterableColumns={filterableColumns}
+        //   floatingBarContent={TasksTableFloatingBarContent(dataTable)}
+        //   deleteRowsAction={(event) => deleteSelectedRows(dataTable, event)}
+      />
     </div>
   );
 }

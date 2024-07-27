@@ -22,6 +22,7 @@ export const AUCTION_URLS = {
     `/auctions/set-confirm/${id}`,
   UPDATE_AUCTIONS_SET_COMMING: (id: string | number) =>
     `/auctions/set-comming/${id}`,
+
   CREATE_AUCTIONS: "/auctions/create",
 
   REGISTER_ATTEND_AUCTIONS: (auctionId: string) =>
@@ -33,4 +34,7 @@ export const FEEDBACK_URLS = {
   CREATE_FEEDBACK: "/feedbacks/create",
   GET_FEEDBACKS_AUCTIONS: (auctionId: string) =>
     `/feedbacks/list?auctionID=${auctionId}`,
+};
+export const PAYMENT_URLS = {
+  UPDATE_PAYMENT_ORDER: `/payment/pay-order-with-wallet`,
 };

@@ -8,6 +8,7 @@ import FancyText from "@carefully-coded/react-text-gradient";
 // Make sure to import the useCountdownTimer hook
 
 interface LiveAuctionsCardProps {
+  productImages?: string;
   productName: string;
   productCode: string;
   endDate: Date;
@@ -17,6 +18,7 @@ interface LiveAuctionsCardProps {
 }
 
 export default function DestinationCard({
+  productImages,
   image_url,
   id,
   productName,
@@ -30,7 +32,11 @@ export default function DestinationCard({
     <Link href={`/auction/${id}`}>
       <div className="group/item relative flex aspect-auto h-[340px] w-full flex-col overflow-hidden rounded-xl lg:h-[380px] 2xl:h-[420px] 4xl:h-[500px]">
         <Image
-          src={image_url}
+             src={
+              productImages
+                ? image_url
+                : "https://images.unsplash.com/photo-1522776851755-3914469f0ca2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            }
           alt="destination"
           fill
           sizes="(min-width: 320) 100vw, 100vw"
